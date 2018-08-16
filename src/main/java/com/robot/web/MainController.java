@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Controller
 public class MainController {
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     String home(@RequestBody String request) {
         Body body = new Body();
