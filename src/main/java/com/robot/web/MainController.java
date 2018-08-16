@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -24,12 +23,20 @@ import lombok.NoArgsConstructor;
 public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
-    String home(@RequestBody Request request) throws Exception {
-        String content = request.getText().getContent();
+    String home(@RequestBody String requestStr) {
         Body body = new Body();
-        body.setMsgtype("text");
-        body.setText(Text.builder().content(tuling(content)).build());
-        body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
+        String tuling = null;
+        Request request = null;
+        try {
+            request = JSON.parseObject(requestStr, Request.class);
+            String content = request.getText().getContent();
+            body.setMsgtype("text");
+            tuling = tuling(content);
+        } catch (Exception e) {
+            tuling = e.getMessage();
+        }
+        body.setText(Text.builder().content(tuling).build());
+//        body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
         return JSON.toJSONString(body);
     }
 
@@ -54,7 +61,7 @@ public class MainController {
         }
         return sb == null ? "啥都没返回！" : JSON.parseObject(new String(sb), TuLingBody.class).getText();
     }
-    
+
     @Data
     public static class Request {
         private String msgtype;
@@ -72,7 +79,7 @@ public class MainController {
         private String chatbotUserId;
         private List<User> atUsers;
     }
-    
+
     @Data
     public static class User {
         String dingtalkId;
@@ -131,7 +138,7 @@ public class MainController {
         private List<String> atMobiles;
         private List<String> atDingtalkIds;
     }
-    
+
     @Data
     public static class TuLingBody {
         private Long code;
