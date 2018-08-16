@@ -2,8 +2,8 @@ package com.robot.web;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
-    String home(@RequestBody String requestStr) {
+    String home(@RequestBody String requestStr) throws Exception {
         Body body = new Body();
         String tuling = null;
         Request request = null;
@@ -33,32 +33,32 @@ public class MainController {
             body.setMsgtype("text");
             tuling = tuling(content);
         } catch (Exception e) {
-            tuling = e.getMessage();
+            throw e;
         }
         body.setText(Text.builder().content(tuling).build());
-//        body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
+        // body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
         return JSON.toJSONString(body);
+    }
+
+    public static void main(String[] args) throws Exception {
+        String home = new MainController().home(
+                "{\"conversationId\":\"cidTVzJXHpYaCrHZUDICuJD7w==\",\"atUsers\":[{\"dingtalkId\":\"$:LWCP_v1:$5Jc6YILw9BuI+iXHqNUUdppIqRXDhvSC\"}],\"chatbotUserId\":\"$:LWCP_v1:$5Jc6YILw9BuI+iXHqNUUdppIqRXDhvSC\",\"msgId\":\"msgqsRt+R77IplToZrmuBN3ZQ==\",\"senderNick\":\"萌渣\",\"isAdmin\":false,\"sessionWebhookExpiredTime\":1534418851465,\"createAt\":1534417651423,\"conversationType\":\"2\",\"senderId\":\"$:LWCP_v1:$0gHTs7dwDCbbPEpi2s6QZF+5UVkM0uQp\",\"conversationTitle\":\"纪二文,萌渣,袁倍嘉\",\"isInAtList\":true,\"sessionWebhook\":\"https://oapi.dingtalk.com/robot/sendBySession?session=337a20214065cbbb806e1d186299f615\",\"text\":{\"content\":\"天气怎么样\"},\"msgtype\":\"text\"}");
+        System.out.println(home);
     }
 
     public String tuling(String context) throws Exception {
         String APIKEY = "402536689fcf4282ae1f213e70c6a819";
-        String getURL = "http://www.tuling123.com/openapi/api?key=" + APIKEY + "&info=" + context;
-        URL getUrl = new URL(getURL);
-        HttpURLConnection connection = (HttpURLConnection) getUrl.openConnection();
-        connection.connect();
+        String url = "http://www.tuling123.com/openapi/api?key=" + APIKEY + "&info=" + URLEncoder.encode(context.trim(), "utf-8");
+        System.out.println(url);
         StringBuffer sb = null;
-
         // 取得输入流，并使用Reader读取
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "utf-8"))) {
             sb = new StringBuffer();
             String line = "";
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
-        } finally {
-            // 断开连接
-            connection.disconnect();
-        }
+        } 
         return sb == null ? "啥都没返回！" : JSON.parseObject(new String(sb), TuLingBody.class).getText();
     }
 
