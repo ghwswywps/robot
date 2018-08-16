@@ -40,12 +40,6 @@ public class MainController {
         return JSON.toJSONString(body);
     }
 
-    public static void main(String[] args) throws Exception {
-        String home = new MainController().home(
-                "{\"conversationId\":\"cidTVzJXHpYaCrHZUDICuJD7w==\",\"atUsers\":[{\"dingtalkId\":\"$:LWCP_v1:$5Jc6YILw9BuI+iXHqNUUdppIqRXDhvSC\"}],\"chatbotUserId\":\"$:LWCP_v1:$5Jc6YILw9BuI+iXHqNUUdppIqRXDhvSC\",\"msgId\":\"msgqsRt+R77IplToZrmuBN3ZQ==\",\"senderNick\":\"萌渣\",\"isAdmin\":false,\"sessionWebhookExpiredTime\":1534418851465,\"createAt\":1534417651423,\"conversationType\":\"2\",\"senderId\":\"$:LWCP_v1:$0gHTs7dwDCbbPEpi2s6QZF+5UVkM0uQp\",\"conversationTitle\":\"纪二文,萌渣,袁倍嘉\",\"isInAtList\":true,\"sessionWebhook\":\"https://oapi.dingtalk.com/robot/sendBySession?session=337a20214065cbbb806e1d186299f615\",\"text\":{\"content\":\"天气怎么样\"},\"msgtype\":\"text\"}");
-        System.out.println(home);
-    }
-
     public String tuling(String context) throws Exception {
         String APIKEY = "402536689fcf4282ae1f213e70c6a819";
         String url = "http://www.tuling123.com/openapi/api?key=" + APIKEY + "&info=" + URLEncoder.encode(context.trim(), "utf-8");
