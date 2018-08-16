@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Controller
 public class MainController {
@@ -52,7 +54,7 @@ public class MainController {
         }
         return sb == null ? "啥都没返回！" : JSON.parseObject(new String(sb), TuLingBody.class).getText();
     }
-
+    
     @Data
     public static class Request {
         private String msgtype;
@@ -68,6 +70,12 @@ public class MainController {
         private String context;
         private String chatbotCorpId;
         private String chatbotUserId;
+        private List<User> atUsers;
+    }
+    
+    @Data
+    public static class User {
+        String dingtalkId;
     }
 
     @Data
@@ -81,6 +89,8 @@ public class MainController {
 
     @Data
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Text {
         private String content;
     }
@@ -115,6 +125,8 @@ public class MainController {
 
     @Data
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class At {
         private List<String> atMobiles;
         private List<String> atDingtalkIds;
