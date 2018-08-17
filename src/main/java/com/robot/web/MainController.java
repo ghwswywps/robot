@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -23,12 +24,10 @@ import lombok.NoArgsConstructor;
 public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
-    String home(@RequestBody String requestStr) throws Exception {
+    String home(@RequestBody Request request) throws Exception {
         Body body = new Body();
         String tuling = null;
-        Request request = null;
         try {
-            request = JSON.parseObject(requestStr, Request.class);
             String content = request.getText().getContent();
             body.setMsgtype("text");
             tuling = tuling(content);
@@ -36,7 +35,7 @@ public class MainController {
             throw e;
         }
         body.setText(Text.builder().content(tuling).build());
-        // body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
+        body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
         return JSON.toJSONString(body);
     }
 
