@@ -24,10 +24,12 @@ import lombok.NoArgsConstructor;
 public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
-    String home(@RequestBody Request request) throws Exception {
+    String home(@RequestBody String requestStr) throws Exception {
         Body body = new Body();
         String tuling = null;
+        Request request = null;
         try {
+            request = JSON.parseObject(requestStr, Request.class);
             String content = request.getText().getContent();
             body.setMsgtype("text");
             tuling = tuling(content);
