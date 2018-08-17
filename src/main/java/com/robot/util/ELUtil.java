@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
-import com.robot.entity.Entity.ELEnum;
-import com.robot.entity.Entity.ELNode;
+import com.robot.entity.ELEnum;
+import com.robot.entity.ELNode;
 
 public class ELUtil {
     public static boolean check(String context, ELNode node) {
