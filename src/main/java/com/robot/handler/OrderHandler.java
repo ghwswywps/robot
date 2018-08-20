@@ -42,7 +42,7 @@ public class OrderHandler implements ApplicationContextAware {
         orderMap.put("增加MARKDOWN模板", Order
                 .builder()
                 .args(Arrays.asList("*temple", "*el", "*title"))
-                .name("增加TEXT模板")
+                .name("增加MARKDOWN模板")
                 .action(p -> {
                     Body body = new Body();
                     getTempleRepository().save(Temple
