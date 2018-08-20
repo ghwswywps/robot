@@ -88,7 +88,7 @@ public class OrderHandler implements ApplicationContextAware {
         orderMap.put("机器人指令", Order
                 .builder()
                 .args(Arrays.asList())
-                .name("指令")
+                .name("机器人指令")
                 .action(p -> {
                     Body body = new Body();
                     body.setMsgtype("text");
