@@ -1,7 +1,5 @@
 package com.robot.web;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.robot.bean.Temple;
 import com.robot.bean.repository.TempleRepository;
-import com.robot.entity.At;
 import com.robot.entity.Body;
 import com.robot.entity.Request;
+import com.robot.entity.Text;
 import com.robot.handler.ContentHandler;
 
 @Controller
@@ -29,7 +27,16 @@ public class MainController {
     String home(@RequestBody String requestStr) throws Exception {
         Request request = JSON.parseObject(requestStr, Request.class);
         Body body = contentHandler.getBodyByRequest(request);
-        body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
+        return JSON.toJSONString(body);
+    }
+    
+    @RequestMapping(value = "/test", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    String test() {
+        Request r = new Request();
+        r.setText(new Text());
+        r.getText().setContent("指令");
+        Body body = contentHandler.getBodyByRequest(r);
         return JSON.toJSONString(body);
     }
 

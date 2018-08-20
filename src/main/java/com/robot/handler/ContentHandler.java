@@ -6,8 +6,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.At;
 import com.robot.entity.Body;
 import com.robot.entity.MDTemple;
+import com.robot.entity.Order;
 import com.robot.entity.Request;
 import com.robot.entity.Text;
 import com.robot.entity.TuLingBody;
@@ -27,11 +31,13 @@ public class ContentHandler {
     @Autowired
     private TempleRepository templeRepository;
 
+    public static List<MDTemple> mdts;
+
     public Body getBodyByRequest(Request request) {
         Body body = new Body();
         try {
             String content = request.getText().getContent();
-            handleBody(body, content);
+            body = handleBody(content);
         } catch (Exception e) {
             body.setMsgtype("text");
             body.setText(Text.builder().content(e.getMessage()).build());
@@ -40,24 +46,38 @@ public class ContentHandler {
         return body;
     }
 
-    private void handleBody(Body body, String content) throws Exception {
-        if (content.trim().startsWith("增加模板")) {
-            String[] split = content.trim().split(" ");
-            String el = split[1];
-            String msgtype = split[2];
-            String temple = split[3];
-            Temple t = new Temple();
-            t.setEl(el);
-            t.setMsgtype(msgtype);
-            t.setTemple(temple);
-            templeRepository.save(t);
-            body.setMsgtype("text");
-            body.setText(Text.builder().content("添加成功").build());
-            return;
+    private Body handleBody(String content) throws Exception {
+        Body body = new Body();
+        // 优先级1：order ===================================
+        Map<String, Order> orderMap = OrderHandler.orderMap;
+        for (String key : orderMap.keySet()) {
+            if (content.trim().startsWith(key)) {
+                Order order = orderMap.get(key);
+                Map<String, String> property = getProperty(content);
+                return order.getAction().get(property);
+            }
         }
-        Iterable<Temple> all = templeRepository.findAll();
-        List<MDTemple> mdts = new ArrayList<>();
-        all.forEach(t -> {
+        // 优先级2：el ===================================
+        if (mdts == null)
+            init();
+        for (MDTemple mdTemple : mdts) {
+            if (ELUtil.check(content, mdTemple.getElNode())) {
+                body.setMsgtype(mdTemple.getMsgtype());
+                String temple = mdTemple.getTemple();
+                body.setText(Text.builder().content(StringEscapeUtils.unescapeJava(temple)).build());
+                return body;
+            }
+        }
+        // 优先级3：tuling ===================================
+        body.setMsgtype("text");
+        body.setText(Text.builder().content(tuling(content)).build());
+        return body;
+    }
+
+    public void init() {
+        Iterable<Temple> temples = templeRepository.findAll();
+        mdts = new ArrayList<>();
+        temples.forEach(t -> {
             MDTemple mdt = new MDTemple();
             mdt.setEl(t.getEl());
             mdt.setTemple(t.getTemple());
@@ -65,15 +85,19 @@ public class ContentHandler {
             mdt.setElNode(ELUtil.getNode(t.getEl()));
             mdts.add(mdt);
         });
-        for (MDTemple mdTemple : mdts) {
-            if (ELUtil.check(content, mdTemple.getElNode())) {
-                body.setMsgtype(mdTemple.getMsgtype());
-                body.setText(Text.builder().content(mdTemple.getTemple()).build());
-                return;
-            }
+    }
+
+    private Map<String, String> getProperty(String content) throws Exception {
+        Map<String, String> p = new HashMap<>();
+        String[] split = content.trim().split("[\\s\t\n]+");
+        for (int i = 1; i < split.length; i++) {
+            String v = split[i];
+            if (!v.contains(":::"))
+                throw new Exception("参数非法:" + v);
+            String[] kv = v.split(":::");
+            p.put(kv[0], kv[1]);
         }
-        body.setMsgtype("text");
-        body.setText(Text.builder().content(tuling(content)).build());
+        return p;
     }
 
     public String tuling(String context) throws Exception {
