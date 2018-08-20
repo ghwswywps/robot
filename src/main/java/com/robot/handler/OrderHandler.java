@@ -67,7 +67,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMsgtype("text");
                     StringBuilder res = new StringBuilder();
                     orderMap.forEach((k,v) -> {
-                        res.append(res.length() > 0 ? "\n" : "" + "指令:" + v.getName() + ",参数" + v.getArgs().toString());
+                        res.append((res.length() > 0 ? "\n" : "") + "指令:" + v.getName() + ",参数" + v.getArgs().toString());
                     });
                     body.setText(Text.builder().content(res.toString()).build());
                     return body;
