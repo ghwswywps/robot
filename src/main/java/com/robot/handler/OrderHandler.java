@@ -85,7 +85,7 @@ public class OrderHandler implements ApplicationContextAware {
                     return body;
                 })
                 .build());
-        orderMap.put("指令", Order
+        orderMap.put("机器人指令", Order
                 .builder()
                 .args(Arrays.asList())
                 .name("指令")
