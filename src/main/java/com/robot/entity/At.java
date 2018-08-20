@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class At {
     private List<String> atMobiles;
     private List<String> atDingtalkIds;
+    private boolean isAtAll;
 }

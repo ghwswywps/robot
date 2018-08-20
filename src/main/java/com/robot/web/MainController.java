@@ -2,6 +2,7 @@ package com.robot.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,7 +36,7 @@ public class MainController {
     String test() {
         Request r = new Request();
         r.setText(new Text());
-        r.getText().setContent("指令");
+        r.getText().setContent("md测试123");
         Body body = contentHandler.getBodyByRequest(r);
         return JSON.toJSONString(body);
     }
@@ -60,6 +61,13 @@ public class MainController {
     @ResponseBody
     String h2DeletAll() {
         templeRepository.deleteAll();
+        return "ok";
+    }
+    
+    @RequestMapping(value = "/delete/{id}", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    String h2Delet(@PathVariable("id") Long id) {
+        templeRepository.delete(id);
         return "ok";
     }
 
