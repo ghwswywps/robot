@@ -58,6 +58,33 @@ public class OrderHandler implements ApplicationContextAware {
                     return body;
                 })
                 .build());
+        orderMap.put("模板列表", Order
+                .builder()
+                .args(Arrays.asList())
+                .name("模板列表")
+                .action(p -> {
+                    Body body = new Body();
+                    StringBuilder res = new StringBuilder();
+                    getTempleRepository().findAll().forEach(t -> {
+                        res.append((res.length() > 0 ? "\n" : "") + t.toString());
+                    });
+                    body.setMsgtype("text");
+                    body.setText(Text.builder().content(res.toString()).build());
+                    return body;
+                })
+                .build());
+        orderMap.put("删除模板", Order
+                .builder()
+                .args(Arrays.asList("*id"))
+                .name("删除模板")
+                .action(p -> {
+                    Body body = new Body();
+                    getTempleRepository().delete(Long.parseLong(p.get("id")));
+                    body.setMsgtype("text");
+                    body.setText(Text.builder().content("操作成功").build());
+                    return body;
+                })
+                .build());
         orderMap.put("指令", Order
                 .builder()
                 .args(Arrays.asList())
