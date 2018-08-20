@@ -28,7 +28,9 @@ public class MainController {
     String home(@RequestBody String requestStr) throws Exception {
         Request request = JSON.parseObject(requestStr, Request.class);
         Body body = contentHandler.getBodyByRequest(request);
-        return JSON.toJSONString(body);
+        String res = JSON.toJSONString(body);
+        System.out.println(res);
+        return res;
     }
     
     @RequestMapping(value = "/test", produces = "application/json; charset=utf-8")
