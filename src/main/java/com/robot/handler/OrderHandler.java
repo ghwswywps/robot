@@ -23,7 +23,7 @@ public class OrderHandler implements ApplicationContextAware {
     static {
         orderMap.put("增加TEXT模板", Order
                 .builder()
-                .args(Arrays.asList("temple", "el"))
+                .args(Arrays.asList("*temple", "*el"))
                 .name("增加TEXT模板")
                 .action(p -> {
                     Body body = new Body();
@@ -32,6 +32,25 @@ public class OrderHandler implements ApplicationContextAware {
                             .el(p.get("el"))
                             .msgtype("text")
                             .temple(p.get("temple"))
+                            .build());
+                    getContentHandler().init();
+                    body.setMsgtype("text");
+                    body.setText(Text.builder().content("添加成功").build());
+                    return body;
+                })
+                .build());
+        orderMap.put("增加MARKDOWN模板", Order
+                .builder()
+                .args(Arrays.asList("*temple", "*el", "*title"))
+                .name("增加TEXT模板")
+                .action(p -> {
+                    Body body = new Body();
+                    getTempleRepository().save(Temple
+                            .builder()
+                            .el(p.get("el"))
+                            .msgtype("markdown")
+                            .temple(p.get("temple"))
+                            .title(p.get("title"))
                             .build());
                     getContentHandler().init();
                     body.setMsgtype("text");
@@ -48,7 +67,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMsgtype("text");
                     StringBuilder res = new StringBuilder();
                     orderMap.forEach((k,v) -> {
-                        res.append("指令:" + v.getName() + ",参数" + v.getArgs().toString() + "\n");
+                        res.append(res.length() > 0 ? "\n" : "" + "指令:" + v.getName() + ",参数" + v.getArgs().toString());
                     });
                     body.setText(Text.builder().content(res.toString()).build());
                     return body;

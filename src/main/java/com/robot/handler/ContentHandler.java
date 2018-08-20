@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.At;
 import com.robot.entity.Body;
 import com.robot.entity.MDTemple;
+import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
 import com.robot.entity.Request;
 import com.robot.entity.Text;
@@ -47,13 +49,14 @@ public class ContentHandler {
     }
 
     private Body handleBody(String content) throws Exception {
-        Body body = new Body();
+        
         // 优先级1：order ===================================
         Map<String, Order> orderMap = OrderHandler.orderMap;
         for (String key : orderMap.keySet()) {
             if (content.trim().startsWith(key)) {
                 Order order = orderMap.get(key);
                 Map<String, String> property = getProperty(content);
+                checkArgs(order.getArgs(), property);
                 return order.getAction().get(property);
             }
         }
@@ -62,16 +65,39 @@ public class ContentHandler {
             init();
         for (MDTemple mdTemple : mdts) {
             if (ELUtil.check(content, mdTemple.getElNode())) {
-                body.setMsgtype(mdTemple.getMsgtype());
-                String temple = mdTemple.getTemple();
-                body.setText(Text.builder().content(StringEscapeUtils.unescapeJava(temple)).build());
-                return body;
+                return getBody(mdTemple);
             }
         }
         // 优先级3：tuling ===================================
+        Body body = new Body();
         body.setMsgtype("text");
         body.setText(Text.builder().content(tuling(content)).build());
         return body;
+    }
+
+    private Body getBody(MDTemple mdTemple) {
+        Body body = new Body();
+        body.setMsgtype(mdTemple.getMsgtype());
+        String temple = mdTemple.getTemple();
+        String unescapeText = StringEscapeUtils.unescapeJava(temple);
+        switch (mdTemple.getMsgtype()) {
+        case "text":
+            body.setText(Text.builder().content(unescapeText).build());
+            break;
+        case "markdown":
+            body.setMarkDown(MarkDown.builder().text(unescapeText).title(mdTemple.getTitle()).build());
+        default:
+            break;
+        }
+        return body;
+    }
+
+    private void checkArgs(List<String> args, Map<String, String> property) throws Exception {
+        List<String> needArgs = args.stream().filter(arg -> arg.startsWith("\\*")).collect(Collectors.toList());
+        for (String p : needArgs) {
+            if (property.get(p) == null)
+                throw new Exception("参数非法，请检查必要参数！");
+        }
     }
 
     public void init() {
@@ -83,6 +109,7 @@ public class ContentHandler {
             mdt.setTemple(t.getTemple());
             mdt.setMsgtype(t.getMsgtype());
             mdt.setElNode(ELUtil.getNode(t.getEl()));
+            mdt.setTitle(t.getTitle());
             mdts.add(mdt);
         });
     }

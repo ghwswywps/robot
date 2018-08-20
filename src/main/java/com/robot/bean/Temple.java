@@ -24,4 +24,6 @@ public class Temple {
     private String msgtype;
 
     private String temple;
+    
+    private String title;
 }
