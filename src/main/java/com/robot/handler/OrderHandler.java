@@ -68,14 +68,14 @@ public class OrderHandler implements ApplicationContextAware {
                     getTempleRepository().save(Temple
                             .builder()
                             .el(p.get("el"))
-                            .msgtype("markdown")
+                            .msgtype("link")
                             .temple(p.get("temple"))
                             .title(p.get("title"))
                             .messageUrl(p.get("messageUrl"))
                             .picUrl(p.get("picUrl"))
                             .build());
                     getContentHandler().init();
-                    body.setMsgtype("link");
+                    body.setMsgtype("text");
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
                 })
