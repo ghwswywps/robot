@@ -17,12 +17,13 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 @Configuration
 public class WebConfiguration {
 
-    private static final String mapping = "/console/*";
+    private static final String mapping = "/h2/*";
 
     @Bean
     public ServletRegistrationBean h2servletRegistration(){
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
         registrationBean.addUrlMappings(mapping);
+        registrationBean.addInitParameter("-webAllowOthers", "");
         return registrationBean;
     }
 
