@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.robot.bean.Temple;
 import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.Body;
+import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
 import com.robot.entity.Text;
 
@@ -80,6 +81,7 @@ public class OrderHandler implements ApplicationContextAware {
                 .action(p -> {
                     Body body = new Body();
                     getTempleRepository().delete(Long.parseLong(p.get("id")));
+                    getContentHandler().init();
                     body.setMsgtype("text");
                     body.setText(Text.builder().content("操作成功").build());
                     return body;
@@ -91,15 +93,35 @@ public class OrderHandler implements ApplicationContextAware {
                 .name("机器人指令")
                 .action(p -> {
                     Body body = new Body();
-                    body.setMsgtype("text");
+                    body.setMsgtype("markdown");
                     StringBuilder res = new StringBuilder();
+                    res.append("## 机器人指令\n" + 
+                            "------\n");
                     orderMap.forEach((k,v) -> {
-                        res.append((res.length() > 0 ? "\n" : "") + "指令:" + v.getName() + ",参数" + v.getArgs().toString());
+                        res.append((res.length() > 0 ? "\n" : "") + "- 指令:" + v.getName() + ",参数" + v.getArgs().toString());
                     });
-                    body.setText(Text.builder().content(res.toString()).build());
+                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("机器人指令").build());
                     return body;
                 })
                 .build());
+        orderMap.put("帮助列表", Order
+                .builder()
+                .args(Arrays.asList())
+                .name("帮助列表")
+                .action(p -> {
+                    Body body = new Body();
+                    body.setMsgtype("markdown");
+                    StringBuilder res = new StringBuilder();
+                    res.append("## 帮助列表(键入或点击以下指令获取帮助)\n" + 
+                            "------\n" + 
+                            "1. [机器人指令](dtmd://dingtalkclient/sendMessage?content=机器人指令)\n" + 
+                            "2. [指令帮助](dtmd://dingtalkclient/sendMessage?content=指令帮助)\n" + 
+                            "3. [模板帮助](dtmd://dingtalkclient/sendMessage?content=模板帮助)");
+                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("帮助列表").build());
+                    return body;
+                })
+                .build());
+        
     }
 
     @Override
