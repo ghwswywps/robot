@@ -12,8 +12,12 @@ import com.robot.entity.ELNode;
 public class ELUtil {
     public static boolean check(String context, ELNode node) {
         boolean result = true;
-        if (node.getElEnum().equals(ELEnum.string))
-            return context.contains(node.getValue());
+        if (node.getElEnum().equals(ELEnum.string)) {
+            if(node.getValue().startsWith("*"))
+                return context.trim().equals(node.getValue().trim().split("\\*")[1]);
+            else
+                return context.contains(node.getValue());
+        }
         List<ELNode> nodes = node.getNodes();
         ELNode firstNode = nodes.get(0);
         if (firstNode.getElEnum().equals(ELEnum.string)) {

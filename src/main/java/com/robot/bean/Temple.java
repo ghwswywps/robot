@@ -22,8 +22,9 @@ public class Temple {
     private String el;
     
     private String msgtype;
-
+    
     private String temple;
     
     private String title;
+    
 }
