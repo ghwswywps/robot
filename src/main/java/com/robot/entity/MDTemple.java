@@ -8,5 +8,7 @@ public class MDTemple {
     private String temple;
     private String msgtype;
     private String title;
+    private String messageUrl;
+    private String picUrl;
     private ELNode elNode;
 }

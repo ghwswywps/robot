@@ -26,4 +26,8 @@ public class Temple {
     private String temple;
     
     private String title;
+    
+    private String messageUrl;
+    
+    private String picUrl;
 }

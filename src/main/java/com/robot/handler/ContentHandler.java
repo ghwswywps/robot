@@ -20,6 +20,7 @@ import com.robot.bean.Temple;
 import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.At;
 import com.robot.entity.Body;
+import com.robot.entity.Link;
 import com.robot.entity.MDTemple;
 import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
@@ -86,6 +87,9 @@ public class ContentHandler {
             break;
         case "markdown":
             body.setMarkdown(MarkDown.builder().text(unescapeText).title(mdTemple.getTitle()).build());
+        case "link":
+            body.setLink(Link.builder().text(unescapeText).title(mdTemple.getTitle()).picUrl(mdTemple.getPicUrl())
+                    .messageUrl(mdTemple.getMessageUrl()).build());
         default:
             break;
         }
@@ -110,6 +114,8 @@ public class ContentHandler {
             mdt.setMsgtype(t.getMsgtype());
             mdt.setElNode(ELUtil.getNode(t.getEl()));
             mdt.setTitle(t.getTitle());
+            mdt.setPicUrl(t.getPicUrl());
+            mdt.setMessageUrl(t.getMessageUrl());
             mdts.add(mdt);
         });
     }

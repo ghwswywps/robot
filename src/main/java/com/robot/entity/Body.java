@@ -8,6 +8,7 @@ public class Body {
     private Text text;
     private MarkDown markdown;
     private At at;
+    private Link link;
     
 
 }

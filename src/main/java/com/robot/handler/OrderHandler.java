@@ -59,6 +59,27 @@ public class OrderHandler implements ApplicationContextAware {
                     return body;
                 })
                 .build());
+        orderMap.put("增加LINK模板", Order
+                .builder()
+                .args(Arrays.asList("\\*temple", "\\*el", "\\*title", "\\*messageUrl", "picUrl"))
+                .name("增加LINK模板")
+                .action(p -> {
+                    Body body = new Body();
+                    getTempleRepository().save(Temple
+                            .builder()
+                            .el(p.get("el"))
+                            .msgtype("markdown")
+                            .temple(p.get("temple"))
+                            .title(p.get("title"))
+                            .messageUrl(p.get("messageUrl"))
+                            .picUrl(p.get("picUrl"))
+                            .build());
+                    getContentHandler().init();
+                    body.setMsgtype("link");
+                    body.setText(Text.builder().content("添加成功").build());
+                    return body;
+                })
+                .build());
         orderMap.put("模板列表", Order
                 .builder()
                 .args(Arrays.asList())
@@ -129,7 +150,7 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     body.setMsgtype("markdown");
                     StringBuilder res = new StringBuilder();
-                    res.append("## 指令帮助\n" + 
+                    res.append("### 指令帮助\n" + 
                             "------\n" + 
                             "1. 指令格式: @机器人 order k1:::v1 k2:::v2 ...\n" + 
                             "2. 带*参数为必须参数");
@@ -145,7 +166,7 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     body.setMsgtype("markdown");
                     StringBuilder res = new StringBuilder();
-                    res.append("## 模板帮助\n" + 
+                    res.append("### 模板帮助\n" + 
                             "------\n" + 
                             "1. `el`支持`&|()`组合 ,带*为全行匹配,否则为包含匹配\n" + 
                             "```example\n" + 
