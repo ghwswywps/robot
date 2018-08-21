@@ -121,6 +121,42 @@ public class OrderHandler implements ApplicationContextAware {
                     return body;
                 })
                 .build());
+        orderMap.put("指令帮助", Order
+                .builder()
+                .args(Arrays.asList())
+                .name("指令帮助")
+                .action(p -> {
+                    Body body = new Body();
+                    body.setMsgtype("markdown");
+                    StringBuilder res = new StringBuilder();
+                    res.append("## 指令帮助\n" + 
+                            "------\n" + 
+                            "1. 指令格式: @机器人 order k1:::v1 k2:::v2 ...\n" + 
+                            "2. 带*参数为必须参数");
+                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("指令帮助").build());
+                    return body;
+                })
+                .build());
+        orderMap.put("模板帮助", Order
+                .builder()
+                .args(Arrays.asList())
+                .name("模板帮助")
+                .action(p -> {
+                    Body body = new Body();
+                    body.setMsgtype("markdown");
+                    StringBuilder res = new StringBuilder();
+                    res.append("## 模板帮助\n" + 
+                            "------\n" + 
+                            "1. `el`支持`&|()`组合 ,带*为全行匹配,否则为包含匹配\n" + 
+                            "```example\n" + 
+                            "  el=*帮助大全|(帮助&列表)\n" + 
+                            "    在键入\"帮助大全\"或者\"有没有列表可以帮助我\"可以匹配\n" + 
+                            "```\n" + 
+                            "2. 一般来说，`temple`参数为通用实体，作为所有模板的主显示体为用");
+                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("模板帮助").build());
+                    return body;
+                })
+                .build());
         
     }
 
