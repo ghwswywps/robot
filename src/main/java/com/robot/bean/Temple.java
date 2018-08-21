@@ -26,5 +26,4 @@ public class Temple {
     private String temple;
     
     private String title;
-    
 }

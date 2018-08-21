@@ -20,11 +20,7 @@ public class ELUtil {
         }
         List<ELNode> nodes = node.getNodes();
         ELNode firstNode = nodes.get(0);
-        if (firstNode.getElEnum().equals(ELEnum.string)) {
-            result = context.contains(firstNode.getValue());
-        } else {
-            result = check(context, firstNode);
-        }
+        result = check(context, firstNode);
         for (int i = 0; i < nodes.size() - 2; i += 2) {
             ELNode symNode = nodes.get(i + 1);
             ELNode calNode = nodes.get(i + 2);
