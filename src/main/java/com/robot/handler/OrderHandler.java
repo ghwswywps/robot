@@ -98,7 +98,7 @@ public class OrderHandler implements ApplicationContextAware {
                         res.append("\n\n-----\n");
                     });
                     body.setMsgtype("markdown");
-                    body.setText(Text.builder().content(res.toString()).build());
+                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("模板列表").build());
                     return body;
                 })
                 .build());
