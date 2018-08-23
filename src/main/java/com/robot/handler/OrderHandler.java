@@ -94,7 +94,7 @@ public class OrderHandler implements ApplicationContextAware {
                         res.append("> msgtype:" + t.getMsgtype() + "  \n");
                         res.append("> pic_url:" + t.getPicUrl() + "  \n");
                         res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
-                        res.append("> temple:" + t.getTemple() + "  \n");
+                        res.append("> temple:  \n> ```" + t.getTemple() + "\n> ```\n");
                         res.append("\n\n-----\n");
                     });
                     body.setMsgtype("markdown");
