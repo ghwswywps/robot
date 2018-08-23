@@ -87,10 +87,17 @@ public class OrderHandler implements ApplicationContextAware {
                 .action(p -> {
                     Body body = new Body();
                     StringBuilder res = new StringBuilder();
+                    res.append("## 模板列表\n\n-----\n");
                     getTempleRepository().findAll().forEach(t -> {
-                        res.append((res.length() > 0 ? "\n" : "") + t.toString());
+                        res.append("> id:" + t.getId() + "  \n");
+                        res.append("> el:" + t.getEl() + "  \n");
+                        res.append("> msgtype:" + t.getMsgtype() + "  \n");
+                        res.append("> pic_url:" + t.getPicUrl() + "  \n");
+                        res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
+                        res.append("> temple:" + t.getTemple() + "  \n");
+                        res.append("\n\n-----\n");
                     });
-                    body.setMsgtype("text");
+                    body.setMsgtype("markdown");
                     body.setText(Text.builder().content(res.toString()).build());
                     return body;
                 })
