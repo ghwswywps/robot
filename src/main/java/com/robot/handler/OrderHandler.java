@@ -15,6 +15,7 @@ import com.robot.entity.Body;
 import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
 import com.robot.entity.Text;
+import com.robot.util.DingUtil;
 
 @Component
 public class OrderHandler implements ApplicationContextAware {
@@ -80,6 +81,44 @@ public class OrderHandler implements ApplicationContextAware {
                     return body;
                 })
                 .build());
+        orderMap.put("增加SQL", Order
+                .builder()
+                .args(Arrays.asList("\\*temple", "\\*el", "\\*title"))
+                .name("增加SQL")
+                .action(p -> {
+                    Body body = new Body();
+                    getTempleRepository().save(Temple
+                            .builder()
+                            .el(p.get("el"))
+                            .msgtype("sql")
+                            .temple(p.get("temple"))
+                            .title(p.get("title"))
+                            .build());
+                    getContentHandler().init();
+                    body.setMsgtype("text");
+                    body.setText(Text.builder().content("添加成功").build());
+                    return body;
+                })
+                .build());
+        orderMap.put("轮转常用SQL", Order
+                .builder()
+                .args(Arrays.asList())
+                .name("轮转常用SQL")
+                .action(p -> {
+                    Body body = new Body();
+                    StringBuilder res = new StringBuilder();
+                    res.append("## 轮转常用SQL\n\n-----\n");
+                    if (ContentHandler.sqls == null)
+                        getContentHandler().init();
+                    
+                    ContentHandler.sqls.forEach(t -> {
+                        res.append("> - " + DingUtil.getSendingLinkInMD(t.getTitle()) + "  \n");
+                    });
+                    body.setMsgtype("markdown");
+                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("轮转常用SQL").build());
+                    return body;
+                })
+                .build());
         orderMap.put("模板列表", Order
                 .builder()
                 .args(Arrays.asList())
@@ -125,7 +164,8 @@ public class OrderHandler implements ApplicationContextAware {
                     StringBuilder res = new StringBuilder();
                     res.append("### 机器人指令\n" + 
                             "------\n");
-                    Arrays.asList("指令帮助", "机器人指令", "模板帮助", "模板列表", "删除模板", "增加TEXT模板", "增加MARKDOWN模板", "增加LINK模板")
+                    Arrays.asList("指令帮助", "机器人指令", "模板帮助", "模板列表", "删除模板", "增加TEXT模板", "增加MARKDOWN模板", "增加LINK模板"
+                            , "增加SQL", "轮转常用SQL")
                             .forEach(k -> {
                                 Order v = orderMap.get(k);
                                 res.append((res.length() > 0 ? "\n" : "") + "- 指令:" + v.getName() + ",参数"

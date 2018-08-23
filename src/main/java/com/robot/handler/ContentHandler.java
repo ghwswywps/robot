@@ -35,6 +35,8 @@ public class ContentHandler {
     private TempleRepository templeRepository;
 
     public static List<MDTemple> mdts;
+    
+    public static List<MDTemple> sqls;
 
     public Body getBodyByRequest(Request request) {
         Body body = new Body();
@@ -86,7 +88,9 @@ public class ContentHandler {
             body.setText(Text.builder().content(unescapeText).build());
             break;
         case "markdown":
+        case "sql":
             body.setMarkdown(MarkDown.builder().text(unescapeText).title(mdTemple.getTitle()).build());
+            body.setMsgtype("markdown");
         case "link":
             body.setLink(Link.builder().text(unescapeText).title(mdTemple.getTitle()).picUrl(mdTemple.getPicUrl())
                     .messageUrl(mdTemple.getMessageUrl()).build());
@@ -107,6 +111,7 @@ public class ContentHandler {
     public void init() {
         Iterable<Temple> temples = templeRepository.findAll();
         mdts = new ArrayList<>();
+        sqls = new ArrayList<>();
         temples.forEach(t -> {
             MDTemple mdt = new MDTemple();
             mdt.setEl(t.getEl());
@@ -117,6 +122,8 @@ public class ContentHandler {
             mdt.setPicUrl(t.getPicUrl());
             mdt.setMessageUrl(t.getMessageUrl());
             mdts.add(mdt);
+            if ("sql".equals(t.getMsgtype()))
+                sqls.add(mdt);
         });
     }
 
