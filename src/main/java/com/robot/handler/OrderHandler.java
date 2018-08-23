@@ -100,14 +100,14 @@ public class OrderHandler implements ApplicationContextAware {
                     return body;
                 })
                 .build());
-        orderMap.put("轮转常用SQL", Order
+        orderMap.put("常用SQL列表", Order
                 .builder()
                 .args(Arrays.asList())
-                .name("轮转常用SQL")
+                .name("常用SQL列表")
                 .action(p -> {
                     Body body = new Body();
                     StringBuilder res = new StringBuilder();
-                    res.append("## 轮转常用SQL\n\n-----\n");
+                    res.append("## 常用SQL列表\n\n-----\n");
                     if (ContentHandler.sqls == null)
                         getContentHandler().init();
                     
@@ -115,7 +115,7 @@ public class OrderHandler implements ApplicationContextAware {
                         res.append("> - " + DingUtil.getSendingLinkInMD(t.getTitle()) + "  \n");
                     });
                     body.setMsgtype("markdown");
-                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("轮转常用SQL").build());
+                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("常用SQL列表").build());
                     return body;
                 })
                 .build());
@@ -165,7 +165,7 @@ public class OrderHandler implements ApplicationContextAware {
                     res.append("### 机器人指令\n" + 
                             "------\n");
                     Arrays.asList("指令帮助", "机器人指令", "模板帮助", "模板列表", "删除模板", "增加TEXT模板", "增加MARKDOWN模板", "增加LINK模板"
-                            , "增加SQL", "轮转常用SQL")
+                            , "增加SQL", "常用SQL列表")
                             .forEach(k -> {
                                 Order v = orderMap.get(k);
                                 res.append((res.length() > 0 ? "\n" : "") + "- 指令:" + v.getName() + ",参数"
