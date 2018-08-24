@@ -92,7 +92,7 @@ public class OrderHandler implements ApplicationContextAware {
                             .builder()
                             .el("*" + p.get("title"))
                             .msgtype("sql")
-                            .temple("## " + p.get("title") + "\n\n" + 
+                            .temple("## " + p.get("title") + "\n\n-----\n" + 
                                     SqlFormatUtil.format(p.get("sql")))
                             .title(p.get("title"))
                             .build());
