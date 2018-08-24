@@ -93,7 +93,7 @@ public class ContentHandler {
         case "markdown":
             body.setMarkdown(MarkDown.builder().text(unescapeText).title(mdTemple.getTitle()).build());
         case "sql":
-            body.setMarkdown(MarkDown.builder().text(SqlFormatUtil.format(unescapeText)).title(mdTemple.getTitle()).build());
+            body.setMarkdown(MarkDown.builder().text(unescapeText).title(mdTemple.getTitle()).build());
             body.setMsgtype("markdown");
         case "link":
             body.setLink(Link.builder().text(unescapeText).title(mdTemple.getTitle()).picUrl(mdTemple.getPicUrl())
