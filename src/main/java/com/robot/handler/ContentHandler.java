@@ -30,7 +30,6 @@ import com.robot.entity.Request;
 import com.robot.entity.Text;
 import com.robot.entity.TuLingBody;
 import com.robot.util.ELUtil;
-import com.robot.util.SqlFormatUtil;
 
 @Component
 public class ContentHandler {
