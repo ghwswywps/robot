@@ -16,6 +16,7 @@ import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
 import com.robot.entity.Text;
 import com.robot.util.DingUtil;
+import com.robot.util.SqlFormatUtil;
 
 @Component
 public class OrderHandler implements ApplicationContextAware {
@@ -83,15 +84,15 @@ public class OrderHandler implements ApplicationContextAware {
                 .build());
         orderMap.put("增加SQL", Order
                 .builder()
-                .args(Arrays.asList("\\*temple", "\\*el", "\\*title"))
+                .args(Arrays.asList("\\*sql","\\*title"))
                 .name("增加SQL")
                 .action(p -> {
                     Body body = new Body();
                     getTempleRepository().save(Temple
                             .builder()
-                            .el(p.get("el"))
+                            .el("*" + p.get("title"))
                             .msgtype("sql")
-                            .temple(p.get("temple"))
+                            .temple(SqlFormatUtil.format(p.get("sql")))
                             .title(p.get("title"))
                             .build());
                     getContentHandler().init();

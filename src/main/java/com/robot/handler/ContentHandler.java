@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.text.StringEscapeUtils;
@@ -28,6 +30,7 @@ import com.robot.entity.Request;
 import com.robot.entity.Text;
 import com.robot.entity.TuLingBody;
 import com.robot.util.ELUtil;
+import com.robot.util.SqlFormatUtil;
 
 @Component
 public class ContentHandler {
@@ -88,8 +91,9 @@ public class ContentHandler {
             body.setText(Text.builder().content(unescapeText).build());
             break;
         case "markdown":
-        case "sql":
             body.setMarkdown(MarkDown.builder().text(unescapeText).title(mdTemple.getTitle()).build());
+        case "sql":
+            body.setMarkdown(MarkDown.builder().text(SqlFormatUtil.format(unescapeText)).title(mdTemple.getTitle()).build());
             body.setMsgtype("markdown");
         case "link":
             body.setLink(Link.builder().text(unescapeText).title(mdTemple.getTitle()).picUrl(mdTemple.getPicUrl())
@@ -128,6 +132,18 @@ public class ContentHandler {
     }
 
     private Map<String, String> getProperty(String content) throws Exception {
+        Pattern pattern = Pattern.compile("\"\"\"([\\s\\S]*?)\"\"\"");
+        Matcher matcher = pattern.matcher(content);
+        Map<String, String> valueTable = new HashMap<>();
+        int t = 0;
+        while (matcher.find()) {
+            String v = matcher.group(1);
+            String tableName = "{__tableName__" + t + "}";
+            valueTable.put(tableName, v);
+            content = matcher.replaceFirst(tableName);
+            matcher = pattern.matcher(content);
+            t++;
+        }
         Map<String, String> p = new HashMap<>();
         String[] split = content.trim().split("[\\s\t\n]+");
         for (int i = 1; i < split.length; i++) {
@@ -135,11 +151,14 @@ public class ContentHandler {
             if (!v.contains(":::"))
                 throw new Exception("参数非法:" + v);
             String[] kv = v.split(":::");
-            p.put(kv[0], kv[1]);
+            if (valueTable.get(kv[1]) == null)
+                p.put(kv[0], kv[1]);
+            else
+                p.put(kv[0], valueTable.get(kv[1]));
         }
         return p;
     }
-
+    
     public String tuling(String context) throws Exception {
         String APIKEY = "402536689fcf4282ae1f213e70c6a819";
         String url = "http://www.tuling123.com/openapi/api?key=" + APIKEY + "&info="
