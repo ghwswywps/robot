@@ -1,5 +1,6 @@
 package com.robot.web;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +22,16 @@ public class MainController {
     private TempleRepository templeRepository;
     @Autowired
     private ContentHandler contentHandler;
-
+    
+    private Logger logger = Logger.getLogger(MainController.class);
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     String home(@RequestBody String requestStr) throws Exception {
+        logger.info(requestStr);
         Request request = JSON.parseObject(requestStr, Request.class);
         Body body = contentHandler.getBodyByRequest(request);
         String res = JSON.toJSONString(body);
-        System.out.println(res);
+        logger.info(res);
         return res;
     }
     

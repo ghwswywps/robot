@@ -162,7 +162,6 @@ public class ContentHandler {
         String APIKEY = "402536689fcf4282ae1f213e70c6a819";
         String url = "http://www.tuling123.com/openapi/api?key=" + APIKEY + "&info="
                 + URLEncoder.encode(context.trim(), "utf-8");
-        System.out.println(url);
         StringBuffer sb = null;
         // 取得输入流，并使用Reader读取
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "utf-8"))) {
