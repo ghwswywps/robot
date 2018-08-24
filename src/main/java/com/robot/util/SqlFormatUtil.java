@@ -10,7 +10,7 @@ public class SqlFormatUtil {
     public static String format(String text) {
         String formatHive = SQLUtils.formatHive(text);
         formatHive = formatHive.replaceAll("\n", "  \n > ");
-        formatHive = formatHive.replaceAll("([\\s\t\n]|^)(" + getKws() + ")([\\s\t\n])", "$1" + getRed("$2") + "$3");
+        formatHive = formatHive.replaceAll("([\\s\t\n\\(]|^)(" + getKws() + ")([\\s\t\n])", "$1" + getRed("$2") + "$3");
         formatHive = formatHive.replaceAll("(\\.)(\\w+)(\\n|\\(| )", "$1" + getBlue("$2")  + "$3");
         formatHive = formatHive.replaceAll("( )(\\w+)(\\()", "$1" + getBlue("$2")  + "$3");
         formatHive = formatHive.replaceAll("([\\s\t\n\\(]-{0,1})(\\d+)([\\s\t\n\\)])", "$1" + getGreen("$2")  + "$3");
