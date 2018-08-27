@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -135,7 +136,8 @@ public class OrderHandler implements ApplicationContextAware {
                         res.append("> msgtype:" + t.getMsgtype() + "  \n");
                         res.append("> pic_url:" + t.getPicUrl() + "  \n");
                         res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
-                        res.append("> temple:  \n> " + t.getTemple().replaceAll("\n", "  \n > ") + "  \n");
+                        res.append("> temple:  \n> "
+                                + StringEscapeUtils.unescapeJava(t.getTemple().replaceAll("\n", "  \n > ")) + "  \n");
                         res.append("\n\n-----\n");
                     });
                     body.setMsgtype("markdown");
