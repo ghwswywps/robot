@@ -1,6 +1,7 @@
 package com.robot.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.parser.Keywords;
@@ -16,7 +17,7 @@ public class SqlFormatUtil {
         formatHive = formatHive.replaceAll("([\\s\t\n\\(]-{0,1})(\\d+)([\\s\t\n\\)])", "$1" + getGreen("$2")  + "$3");
         formatHive = formatHive.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
         formatHive = formatHive.replaceAll("_", "\\\\_");
-        formatHive = formatHive.replaceAll("\\*", "\\\\*");
+        formatHive = formatHive.replaceAll("\\*", "\\\\\\\\*");
         return " > " + formatHive;
     }
 
