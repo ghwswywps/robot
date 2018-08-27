@@ -130,13 +130,12 @@ public class OrderHandler implements ApplicationContextAware {
                     StringBuilder res = new StringBuilder();
                     res.append("## 模板列表\n\n-----\n\n");
                     getTempleRepository().findAll().forEach(t -> {
-                        res.append("> ```  \n");
                         res.append("> id:" + t.getId() + "  \n");
                         res.append("> el:" + t.getEl() + "  \n");
                         res.append("> msgtype:" + t.getMsgtype() + "  \n");
                         res.append("> pic_url:" + t.getPicUrl() + "  \n");
                         res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
-                        res.append("> temple:  \n> " + t.getTemple().replace("```", "\\`\\`\\`") + "  \n\n");
+                        res.append("> temple:  \n> ```  \n> " + t.getTemple().replace("```", "\\`\\`\\`") + "  \n\n");
                         res.append("> ```  \n");
                         res.append("> \n\n-----\n");
                     });
