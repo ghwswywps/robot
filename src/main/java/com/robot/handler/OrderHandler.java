@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -129,16 +128,17 @@ public class OrderHandler implements ApplicationContextAware {
                 .action(p -> {
                     Body body = new Body();
                     StringBuilder res = new StringBuilder();
-                    res.append("## 模板列表\n\n-----\n");
+                    res.append("## 模板列表\n\n-----\n\n");
+                    res.append("> ```");
                     getTempleRepository().findAll().forEach(t -> {
                         res.append("> id:" + t.getId() + "  \n");
                         res.append("> el:" + t.getEl() + "  \n");
                         res.append("> msgtype:" + t.getMsgtype() + "  \n");
                         res.append("> pic_url:" + t.getPicUrl() + "  \n");
                         res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
-                        res.append("> temple:  \n> "
-                                + StringEscapeUtils.unescapeJava(t.getTemple().replaceAll("\n", "  \n > > ")) + "  \n");
-                        res.append("\n\n-----\n");
+                        res.append("> temple:  \n> " + t.getTemple() + "  \n\n");
+                        res.append("> ```");
+                        res.append("> \n\n-----\n");
                     });
                     body.setMsgtype("markdown");
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("模板列表").build());
