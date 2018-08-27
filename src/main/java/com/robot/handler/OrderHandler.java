@@ -137,7 +137,7 @@ public class OrderHandler implements ApplicationContextAware {
                         res.append("> pic_url:" + t.getPicUrl() + "  \n");
                         res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
                         res.append("> temple:  \n> "
-                                + StringEscapeUtils.unescapeJava(t.getTemple().replaceAll("\n", "  \n > ")) + "  \n");
+                                + StringEscapeUtils.unescapeJava(t.getTemple().replaceAll("\n", "  \n > > ")) + "  \n");
                         res.append("\n\n-----\n");
                     });
                     body.setMsgtype("markdown");
