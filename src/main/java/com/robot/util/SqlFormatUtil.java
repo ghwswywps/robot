@@ -14,6 +14,8 @@ public class SqlFormatUtil {
         formatHive = formatHive.replaceAll("=", ColorUtil.getOrange("="));
         formatHive = formatHive.replaceAll("([\\s\\(]|^)(" + getKws() + ")([\\s])",
                 "$1" + ColorUtil.getRed("$2") + "$3");
+        formatHive = formatHive.replaceAll("([\\s\\(]|^)(" + getKws() + ")([\\s])",
+                "$1" + ColorUtil.getRed("$2") + "$3");
         formatHive = formatHive.replaceAll("(\\.)(\\w+)(\\n|\\(| |,|$)", "$1" + ColorUtil.getBlue("$2") + "$3");
         formatHive = formatHive.replaceAll("( )(\\w+)(\\()", "$1" + ColorUtil.getBlue("$2") + "$3");
         formatHive = formatHive.replaceAll("(\\s)('|\")(\\S+)('|\")(\\s|$)",
@@ -29,5 +31,4 @@ public class SqlFormatUtil {
     private static String getKws() {
         return StringUtils.join(KWS.getKeywords().keySet(), "|");
     }
-
 }
