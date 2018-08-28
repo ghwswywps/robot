@@ -2,6 +2,7 @@ package com.robot.handler;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.BeansException;
@@ -9,12 +10,15 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.robot.bean.Temple;
 import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.Body;
 import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
 import com.robot.entity.Text;
+import com.robot.util.ColorUtil;
 import com.robot.util.DingUtil;
 import com.robot.util.SqlFormatUtil;
 
@@ -123,24 +127,33 @@ public class OrderHandler implements ApplicationContextAware {
                 .build());
         orderMap.put("模板列表", Order
                 .builder()
-                .args(Arrays.asList())
+                .args(Arrays.asList("id", "ids"))
                 .name("模板列表")
                 .action(p -> {
                     Body body = new Body();
                     StringBuilder res = new StringBuilder();
                     res.append("## 模板列表\n\n-----\n\n");
-                    getTempleRepository().findAll().forEach(t -> {
-                        res.append("> id:" + t.getId() + "  \n");
-                        res.append("> el:" + t.getEl() + "  \n");
-                        res.append("> msgtype:" + t.getMsgtype() + "  \n");
-                        res.append("> pic_url:" + t.getPicUrl() + "  \n");
-                        res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
-                        res.append("> temple:  \n> ```  \n"
-                                + "> " + t.getTemple().replaceAll("```", "\\`\\`\\`").replaceAll("(?!\\\\)\\n", "\n > ")
-                                + "  \n\n");
-                        res.append("> ```  \n");
-                        res.append("> \n\n-----\n");
-                    });
+                    if (p.get("id") != null) {
+                        Temple t = getTempleRepository().findOne(Long.parseLong(p.get("id")));
+                        if (t == null) {
+                            body.setMsgtype("text");
+                            body.setText(Text.builder().content("未找到模板").build());
+                            return body;
+                        }
+                        handleTempleShow(res, t);
+                    } else if (p.get("ids") != null) {
+                        Iterable<Temple> ts = getTempleRepository().findAll(JSON.parseObject(p.get("ids"), new TypeReference<List<Long>>() {}));
+                        ts.forEach(t -> {
+                            handleTempleShow(res, t);
+                        });
+                    } else {
+                        getTempleRepository().findAll().forEach(t -> {
+                            res.append("> " + ColorUtil.getOrange("id") + ":" + ColorUtil.getBlue(t.getId() + "") + "  \n");
+                            res.append("> " + ColorUtil.getOrange("el") + ":"
+                                    + DingUtil.getSendingLinkInMD(t.getEl(), "模板列表 id:::" + t.getId()) + "  \n");
+                            res.append("> \n\n-----\n");
+                        });
+                    }
                     body.setMsgtype("markdown");
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("模板列表").build());
                     return body;
@@ -234,6 +247,19 @@ public class OrderHandler implements ApplicationContextAware {
                 })
                 .build());
         
+    }
+
+    private static void handleTempleShow(StringBuilder res, Temple t) {
+        res.append("> " + ColorUtil.getOrange("id") + ":" + t.getId() + "  \n");
+        res.append("> " + ColorUtil.getOrange("el") + ":" + t.getEl() + "  \n");
+        res.append("> msgtype:" + t.getMsgtype() + "  \n");
+        res.append("> pic_url:" + t.getPicUrl() + "  \n");
+        res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
+        res.append("> temple:  \n> ```  \n"
+                + "> " + t.getTemple().replaceAll("```", "\\`\\`\\`").replaceAll("(?!\\\\)\\n", "\n > ")
+                + "  \n\n");
+        res.append("> ```  \n");
+        res.append("> \n\n-----\n");
     }
 
     @Override
