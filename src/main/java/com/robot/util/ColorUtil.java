@@ -2,7 +2,7 @@ package com.robot.util;
 
 public class ColorUtil {
     public static String getGreen(String string) {
-        return "<font color=#00cc00 >" + string + "</font>";
+        return "<font color=#00CC00 >" + string + "</font>";
     }
     
     public static String getRed(String string) {
@@ -14,7 +14,7 @@ public class ColorUtil {
     }
     
     public static String getYellow(String string) {
-        return "<font color=#FFEC8B >" + string + "</font>";
+        return "<font color=#FFCC33 >" + string + "</font>";
     }
     
     public static String getOrange(String string) {
