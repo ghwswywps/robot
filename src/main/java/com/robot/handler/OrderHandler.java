@@ -119,7 +119,7 @@ public class OrderHandler implements ApplicationContextAware {
                     
                     ContentHandler.sqls.forEach(t -> {
                         res.append("> - " + DingUtil.getSendingLinkInMD(t.getTitle()
-                                .replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)")) + "  \n");
+                                .replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), t.getTitle()) + "  \n");
                     });
                     body.setMsgtype("markdown");
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("常用SQL列表").build());
