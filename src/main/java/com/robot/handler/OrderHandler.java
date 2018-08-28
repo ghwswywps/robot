@@ -118,8 +118,10 @@ public class OrderHandler implements ApplicationContextAware {
                         getContentHandler().init();
                     
                     ContentHandler.sqls.forEach(t -> {
-                        res.append("> - " + DingUtil.getSendingLinkInMD(t.getTitle(), t.getTitle()
-                                .replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)")) + "  \n");
+                        res.append("> - " + DingUtil.getSendingLinkInMD(
+                                t.getTitle().replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)"), 
+                                t.getTitle().replaceAll("\\(", "\\(").replaceAll("\\)", "\\)")
+                                ) + "  \n");
                     });
                     body.setMsgtype("markdown");
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("常用SQL列表").build());
