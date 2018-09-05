@@ -222,7 +222,7 @@ public class OrderHandler implements ApplicationContextAware {
                             "------\n" + 
                             "1. 指令格式: @机器人 order k1:::v1 k2:::v2 ...\n" + 
                             "2. 带*参数为必须参数\n" +
-                            "3. 若参数有特殊字符，可以使用JAVA转义替换，如空格可用\40替换\n" + 
+                            "3. 若参数有特殊字符，可以使用JAVA转义替换，如空格可用\\40替换\n" + 
                             "4. 可以使用\"\"\"${value}\"\"\"的格式 来替代转义的方式");
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("指令帮助").build());
                     return body;
