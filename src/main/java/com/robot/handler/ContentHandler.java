@@ -48,10 +48,12 @@ public class ContentHandler {
         } catch (Exception e) {
             body.setMsgtype("text");
             body.setText(Text.builder().content(e.getMessage()).build());
+            e.printStackTrace();
         }
         body.setAt(At.builder().atDingtalkIds(Arrays.asList(request.getSenderId())).build());
         return body;
     }
+    
 
     private Body handleBody(String content) throws Exception {
         
