@@ -1,5 +1,6 @@
 package com.robot.helper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,13 +25,19 @@ public class PowerHelper {
     }
 
     public void save(Power power, List<User> atUsers) {
+        List<String> masterIds = new ArrayList<>();
         atUsers.forEach(user -> {
             String dingtalkId = user.getDingtalkId();
             PowerEntity findByUserId = powerEntityRepository.findByUserId(dingtalkId);
-            if (findByUserId != null)
-                powerEntityRepository.delete(findByUserId.getId());
+            if (findByUserId != null) {
+                if (findByUserId.getPowerId() > 0)
+                    powerEntityRepository.delete(findByUserId.getId());
+                else
+                    masterIds.add(findByUserId.getUserId());
+            }
         });
-        powerEntityRepository.save(atUsers.stream().map(user -> new PowerEntity(0, user.getDingtalkId(), power.getId()))
-                .collect(Collectors.toList()));
+
+        powerEntityRepository.save(atUsers.stream().filter(user -> !masterIds.contains(user.getDingtalkId()))
+                .map(user -> new PowerEntity(0, user.getDingtalkId(), power.getId())).collect(Collectors.toList()));
     }
 }
