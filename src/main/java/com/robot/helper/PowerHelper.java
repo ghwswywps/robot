@@ -21,7 +21,7 @@ public class PowerHelper {
         System.out.println(findByUserId);
         if (findByUserId == null)
             return Power.USER;
-        return Power.getById(findByUserId.getId());
+        return Power.getById(findByUserId.getPowerId());
     }
 
     public void save(Power power, List<User> atUsers) {
