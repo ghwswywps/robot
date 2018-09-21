@@ -1,5 +1,7 @@
 package com.robot.web;
 
+import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.Body;
+import com.robot.entity.Order.Power;
 import com.robot.entity.Request;
 import com.robot.entity.Text;
+import com.robot.entity.User;
 import com.robot.handler.ContentHandler;
+import com.robot.helper.PowerHelper;
 
 @Controller
 public class MainController {
@@ -22,6 +27,8 @@ public class MainController {
     private TempleRepository templeRepository;
     @Autowired
     private ContentHandler contentHandler;
+    @Autowired
+    private PowerHelper powerHelper;
     
     private Logger logger = Logger.getLogger(MainController.class);
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -58,6 +65,12 @@ public class MainController {
     @ResponseBody
     String h2Delet(@PathVariable("id") Long id) {
         templeRepository.delete(id);
+        return "ok";
+    }
+    @RequestMapping(value = "/master_set/{userId}", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    String setMaster(String userId) {
+        powerHelper.save(Power.MASTER, Arrays.asList(new User(userId)));
         return "ok";
     }
 
