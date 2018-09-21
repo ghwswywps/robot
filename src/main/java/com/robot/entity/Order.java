@@ -47,7 +47,7 @@ public class Order {
             
             Power[] values = Power.values();
             for (int i = 0; i < values.length; i++) {
-                if (values[i].getName().toUpperCase() == name.trim().toUpperCase())
+                if (values[i].getName().toUpperCase().equals(name.trim().toUpperCase()))
                     return values[i];
             }
             return USER;

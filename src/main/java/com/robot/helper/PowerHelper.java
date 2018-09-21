@@ -24,6 +24,12 @@ public class PowerHelper {
     }
 
     public void save(Power power, List<User> atUsers) {
+        atUsers.forEach(user -> {
+            String dingtalkId = user.getDingtalkId();
+            PowerEntity findByUserId = powerEntityRepository.findByUserId(dingtalkId);
+            if (findByUserId != null)
+                powerEntityRepository.delete(findByUserId.getId());
+        });
         powerEntityRepository.save(atUsers.stream().map(user -> new PowerEntity(0, user.getDingtalkId(), power.getId()))
                 .collect(Collectors.toList()));
     }
