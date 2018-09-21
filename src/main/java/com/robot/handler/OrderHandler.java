@@ -17,7 +17,10 @@ import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.Body;
 import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
+import com.robot.entity.Order.Power;
 import com.robot.entity.Text;
+import com.robot.entity.User;
+import com.robot.helper.PowerHelper;
 import com.robot.util.ColorUtil;
 import com.robot.util.DingUtil;
 import com.robot.util.SqlFormatUtil;
@@ -45,6 +48,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
                 })
+                .power(Power.ADMIN)
                 .build());
         orderMap.put("增加MARKDOWN模板", Order
                 .builder()
@@ -64,6 +68,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
                 })
+                .power(Power.ADMIN)
                 .build());
         orderMap.put("增加LINK模板", Order
                 .builder()
@@ -85,6 +90,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
                 })
+                .power(Power.ADMIN)
                 .build());
         orderMap.put("增加SQL", Order
                 .builder()
@@ -105,6 +111,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
                 })
+                .power(Power.ADMIN)
                 .build());
         orderMap.put("常用SQL列表", Order
                 .builder()
@@ -124,6 +131,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("常用SQL列表").build());
                     return body;
                 })
+                .power(Power.USER)
                 .build());
         orderMap.put("模板列表", Order
                 .builder()
@@ -158,6 +166,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("模板列表").build());
                     return body;
                 })
+                .power(Power.ADMIN)
                 .build());
         orderMap.put("删除模板", Order
                 .builder()
@@ -171,6 +180,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setText(Text.builder().content("操作成功").build());
                     return body;
                 })
+                .power(Power.ADMIN)
                 .build());
         orderMap.put("机器人指令", Order
                 .builder()
@@ -192,6 +202,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("机器人指令").build());
                     return body;
                 })
+                .power(Power.USER)
                 .build());
         orderMap.put("帮助列表", Order
                 .builder()
@@ -209,6 +220,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("帮助列表").build());
                     return body;
                 })
+                .power(Power.USER)
                 .build());
         orderMap.put("指令帮助", Order
                 .builder()
@@ -227,6 +239,7 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("指令帮助").build());
                     return body;
                 })
+                .power(Power.USER)
                 .build());
         orderMap.put("模板帮助", Order
                 .builder()
@@ -247,6 +260,23 @@ public class OrderHandler implements ApplicationContextAware {
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("模板帮助").build());
                     return body;
                 })
+                .power(Power.USER)
+                .build());
+        orderMap.put("授权", Order
+                .builder()
+                .args(Arrays.asList("*power"))
+                .name("授权")
+                .action(p -> {
+                    String powerStr = p.get("power");
+                    Power power = Power.getByName(powerStr);
+                    List<User> atUsers = JSON.parseObject(p.get("atUsers"), new TypeReference<List<User>>() {});
+                    getPowerHelper().save(power, atUsers);
+                    Body body = new Body();
+                    body.setMsgtype("text");
+                    body.setText(Text.builder().content("添加成功").build());
+                    return body;
+                })
+                .power(Power.MASTER)
                 .build());
         
     }
@@ -277,5 +307,9 @@ public class OrderHandler implements ApplicationContextAware {
     
     public static ContentHandler getContentHandler() {
         return applicationContext.getBean(ContentHandler.class);
+    }
+    
+    public static PowerHelper getPowerHelper() {
+        return applicationContext.getBean(PowerHelper.class);
     }
 }

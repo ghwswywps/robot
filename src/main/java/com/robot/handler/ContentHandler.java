@@ -26,15 +26,20 @@ import com.robot.entity.Link;
 import com.robot.entity.MDTemple;
 import com.robot.entity.MarkDown;
 import com.robot.entity.Order;
+import com.robot.entity.Order.Power;
 import com.robot.entity.Request;
 import com.robot.entity.Text;
 import com.robot.entity.TuLingBody;
+import com.robot.entity.User;
+import com.robot.helper.PowerHelper;
 import com.robot.util.ELUtil;
 
 @Component
 public class ContentHandler {
     @Autowired
     private TempleRepository templeRepository;
+    @Autowired
+    private PowerHelper powerHelper;
 
     public static List<MDTemple> mdts;
     
@@ -43,8 +48,7 @@ public class ContentHandler {
     public Body getBodyByRequest(Request request) {
         Body body = new Body();
         try {
-            String content = request.getText().getContent();
-            body = handleBody(content);
+            body = handleBody(request);
         } catch (Exception e) {
             body.setMsgtype("text");
             body.setText(Text.builder().content(e.getMessage()).build());
@@ -55,14 +59,25 @@ public class ContentHandler {
     }
     
 
-    private Body handleBody(String content) throws Exception {
+    private Body handleBody(Request request) throws Exception {
+        String content = request.getText().getContent();
+        String senderId = request.getSenderId();
+        Power power = powerHelper.getPowerByUserId(senderId);
+        List<User> atUsers = request.getAtUsers();
+        String chatbotUserId = request.getChatbotUserId();
+        atUsers.removeIf(user -> user.getDingtalkId().equals(chatbotUserId));
+        
         
         // 优先级1：order ===================================
         Map<String, Order> orderMap = OrderHandler.orderMap;
         for (String key : orderMap.keySet()) {
             if (content.trim().startsWith(key)) {
                 Order order = orderMap.get(key);
+                Power orderPower = order.getPower();
+                if(orderPower.getId() < power.getId())
+                    break;
                 Map<String, String> property = getProperty(content);
+                property.put("atUsers", JSON.toJSONString(atUsers));
                 checkArgs(order.getArgs(), property);
                 return order.getAction().get(property);
             }
