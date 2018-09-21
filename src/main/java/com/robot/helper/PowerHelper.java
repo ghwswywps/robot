@@ -18,6 +18,7 @@ public class PowerHelper {
 
     public Power getPowerByUserId(String userId) {
         PowerEntity findByUserId = powerEntityRepository.findByUserId(userId);
+        System.out.println(findByUserId);
         if (findByUserId == null)
             return Power.USER;
         return Power.getById(findByUserId.getId());
