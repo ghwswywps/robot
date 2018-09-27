@@ -194,7 +194,7 @@ public class OrderHandler implements ApplicationContextAware {
                     res.append("### 机器人指令\n" + 
                             "------\n");
                     Arrays.asList("指令帮助", "机器人指令", "模板帮助", "模板列表", "删除模板", "增加TEXT模板", "增加MARKDOWN模板", "增加LINK模板"
-                            , "增加SQL", "常用SQL列表", "授权")
+                            , "增加SQL", "常用SQL列表", "授权", "PostManGen")
                             .forEach(k -> {
                                 Order v = orderMap.get(k);
                                 res.append((res.length() > 0 ? "\n" : "") + "- 指令:" + v.getName() + ",参数"

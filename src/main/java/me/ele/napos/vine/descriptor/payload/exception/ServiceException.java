@@ -1,6 +1,11 @@
 package me.ele.napos.vine.descriptor.payload.exception;
 
 public class ServiceException extends me.ele.contract.exception.ServiceException {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     public ServiceException(String message) {
         super(message);
     }
