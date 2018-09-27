@@ -102,22 +102,6 @@ public class ClassScaner {
         return Lists.transform(nameList, f -> trimExtension(f).replaceAll("/", "."));
     }
     
-    public static void main(String[] args) throws MalformedURLException, IOException {
-        String str = 
-                "http://maven.dev.elenet.me/nexus/content/repositories/ele-napos-release/"
-                + "me/ele/napos/"
-                + "xy-garen-provider-descriptor/"
-                + "1.5.8-RELEASE/"
-                + "xy-garen-provider-descriptor-1.5.8-RELEASE.jar";
-        new ClassScaner("").doScanByUrl(new URL(str)).forEach(s -> {
-            try {
-                System.out.println(Class.forName(s));
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        });;
-    }
-
     private String toFullyQualifiedName(String shortName, String basePackage) {
         StringBuilder sb = new StringBuilder(basePackage);
         sb.append('.');

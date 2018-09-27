@@ -30,24 +30,6 @@ import lombok.Data;
 import me.ele.napos.vine.descriptor.annotation.soa.SoaService;
 
 public class PostManGenUtil {
-    public static void main(String[] args) throws Exception {
-        String postManConfigByMavenXml = new PostManGenUtil().getPostManConfigByMavenXml(
-                "<dependency>\n" + 
-                "  <groupId>me.ele.napos</groupId>\n" + 
-                "  <artifactId>xy-garen-search-descriptor</artifactId>\n" + 
-                "  <version>1.5.8-RELEASE</version>\n" + 
-                "  <type>tar</type>\n" + 
-                "</dependency>"
-                , 9400, 
-                "<dependency>\n" + 
-                "  <groupId>me.ele.napos</groupId>\n" + 
-                "  <artifactId>xy-garen-shared-payload</artifactId>\n" + 
-                "  <version>1.5.8-RELEASE</version>\n" + 
-                "  <type>tar</type>\n" + 
-                "</dependency>"
-                );
-        System.out.println(postManConfigByMavenXml);
-    }
     public String gen(String collName, int port) throws IOException {
         ClassScaner classScaner = new ClassScaner("me");
         List<Class<?>> serviceList = classScaner.getByAnnotation(SoaService.class);
