@@ -315,11 +315,11 @@ public class OrderHandler implements ApplicationContextAware {
         res.append("> msgtype:" + t.getMsgtype() + "  \n");
         res.append("> pic_url:" + t.getPicUrl() + "  \n");
         res.append("> messgae_url:" + t.getMessageUrl() + "  \n");
-        res.append("> temple:  \n> ```  \n"
+        res.append("> temple:  \n\n> ```  \n"
                 + "> " + t.getTemple().replaceAll("```", "\\`\\`\\`").replaceAll("(?!\\\\)\\n", "\n > ")
-                + "  \n\n");
+                + "  \n");
         res.append("> ```  \n");
-        res.append("> \n\n-----\n");
+        res.append("> -----\n");
     }
 
     @Override
