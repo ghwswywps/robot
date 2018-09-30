@@ -161,7 +161,7 @@ public class ContentHandler {
             t++;
         }
         Map<String, String> p = new HashMap<>();
-        String[] split = content.trim().split("[\\s\t\n]+");
+        String[] split = content.trim().split("[\\s\t\n￥]+");
         for (int i = 1; i < split.length; i++) {
             String v = split[i];
             if (!v.contains(":::"))

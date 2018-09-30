@@ -159,7 +159,7 @@ public class OrderHandler implements ApplicationContextAware {
                         getTempleRepository().findAll().forEach(t -> {
                             res.append("> " + ColorUtil.getOrange("id") + ":" + ColorUtil.getBlue(t.getId() + "") + "  \n");
                             res.append("> " + ColorUtil.getOrange("el") + ":"
-                                    + DingUtil.getSendingLinkInMD(t.getEl(), "模板列表 id:::" + t.getId()) + "  \n");
+                                    + DingUtil.getSendingLinkInMD(t.getEl(), "模板列表￥id:::" + t.getId()) + "  \n");
                             res.append("> \n"
                                     +  "> -----  "
                                     +  "\n");
