@@ -161,7 +161,7 @@ public class OrderHandler implements ApplicationContextAware {
                             res.append("> " + ColorUtil.getOrange("el") + ":"
                                     + DingUtil.getSendingLinkInMD(t.getEl(), "模板列表 id:::" + t.getId()) + "  \n");
                             res.append("> \n"
-                                    +  "> \n-----  "
+                                    +  "> -----  "
                                     +  "\n");
                         });
                     }
