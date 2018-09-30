@@ -166,7 +166,7 @@ public class OrderHandler implements ApplicationContextAware {
                         });
                     }
                     body.setMsgtype("markdown");
-                    body.setMarkdown(MarkDown.builder().text(res.toString()).title("模板列表").build());
+                    body.setMarkdown(MarkDown.builder().text(res.toString().replaceAll("\\*", "\\\\\\\\*")).title("模板列表").build());
                     return body;
                 })
                 .power(Power.ADMIN)
