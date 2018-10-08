@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,11 +62,17 @@ public class ContentHandler {
 
     private Body handleBody(Request request) throws Exception {
         String content = request.getText().getContent();
+        if (StringUtils.isEmpty(content)) {
+            request.getText().setContent("帮助列表");
+            content = request.getText().getContent();
+        }
+        
         String senderId = request.getSenderId();
         Power power = powerHelper.getPowerByUserId(senderId);
         List<User> atUsers = request.getAtUsers();
         String chatbotUserId = request.getChatbotUserId();
         atUsers.removeIf(user -> user.getDingtalkId().equals(chatbotUserId));
+        
         
         
         // 优先级1：order ===================================

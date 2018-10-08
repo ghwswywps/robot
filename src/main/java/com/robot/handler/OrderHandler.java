@@ -219,7 +219,8 @@ public class OrderHandler implements ApplicationContextAware {
                             "------\n" + 
                             "1. [机器人指令](dtmd://dingtalkclient/sendMessage?content=机器人指令)\n" + 
                             "2. [指令帮助](dtmd://dingtalkclient/sendMessage?content=指令帮助)\n" + 
-                            "3. [模板帮助](dtmd://dingtalkclient/sendMessage?content=模板帮助)");
+                            "3. [模板帮助](dtmd://dingtalkclient/sendMessage?content=模板帮助)\n  " + 
+                            "你也可以尝试键入一些你关系的问题,如([蜂巢是什么](dtmd://dingtalkclient/sendMessage?content=蜂巢是什么))");
                     body.setMarkdown(MarkDown.builder().text(res.toString()).title("帮助列表").build());
                     return body;
                 })
