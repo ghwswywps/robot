@@ -62,7 +62,7 @@ public class ContentHandler {
 
     private Body handleBody(Request request) throws Exception {
         String content = request.getText().getContent();
-        if (StringUtils.isEmpty(content)) {
+        if (StringUtils.isEmpty(content.trim())) {
             request.getText().setContent("帮助列表");
             content = request.getText().getContent();
         }
