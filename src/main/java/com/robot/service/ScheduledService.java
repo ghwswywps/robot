@@ -41,7 +41,7 @@ public class ScheduledService {
     }
     
 
-    @Scheduled(cron = "0 25 14 * * ?")
+    @Scheduled(cron = "0/10 * * * * ?")
     public void af(){
         if(littleTeamToken != null) {
             chatbotSender.sendMarkdown("加班餐提醒",
