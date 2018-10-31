@@ -32,25 +32,25 @@ public class ScheduledService {
         if(littleTeamToken != null) {
             chatbotSender.sendMarkdown("加班餐提醒",
                     "## 加班餐提醒\n" + 
-                            "-----\n" + 
-                            "现在的时间是<font color=#CC3300 >9:29</font>，距离今天可以点加班餐的开始时间还剩<font color=#CC3300 >1</font>分钟。  \n" + 
-                            "\n" + 
-                            "<font color=#3333ff >@" + getAtString() + "</font>", ChatbotSender.WEBHOOK_TOKEN_PRE +littleTeamToken, 
-                            JSON.parseObject(littleTeamMembers, new TypeReference<ArrayList<String>>() {}));
+                    "-----\n" + 
+                    "现在的时间是<font color=#CC3300 >9:29</font>，距离今天可以点加班餐的开始时间还剩<font color=#CC3300 >1</font>分钟。  \n" + 
+                    "\n" + 
+                    "<font color=#3333ff >@" + getAtString() + "</font>", ChatbotSender.WEBHOOK_TOKEN_PRE +littleTeamToken, 
+                    JSON.parseObject(littleTeamMembers, new TypeReference<ArrayList<String>>() {}));
         }
     }
     
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0 55 14 * * ?")
     public void af(){
         if(littleTeamToken != null) {
             chatbotSender.sendMarkdown("加班餐提醒",
                     "## 加班餐提醒\n" + 
-                            "-----\n" + 
-                            "现在的时间是<font color=#CC3300 >14:25</font>，距离今天可以点加班餐的截止时间还剩<font color=#CC3300 >5</font>分钟。  \n" + 
-                            "\n" + 
-                            "<font color=#3333ff >@" + getAtString() + "</font>", ChatbotSender.WEBHOOK_TOKEN_PRE +littleTeamToken, 
-                            JSON.parseObject(littleTeamMembers, new TypeReference<ArrayList<String>>() {}));
+                     "-----\n" + 
+                     "现在的时间是<font color=#CC3300 >14:55</font>，距离今天可以点加班餐的截止时间还剩<font color=#CC3300 >5</font>分钟。  \n" + 
+                     "\n" + 
+                     "<font color=#3333ff >@" + getAtString() + "</font>", ChatbotSender.WEBHOOK_TOKEN_PRE +littleTeamToken, 
+                     JSON.parseObject(littleTeamMembers, new TypeReference<ArrayList<String>>() {}));
         }
     }
     
