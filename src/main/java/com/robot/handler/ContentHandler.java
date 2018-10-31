@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -41,6 +42,9 @@ public class ContentHandler {
     private TempleRepository templeRepository;
     @Autowired
     private PowerHelper powerHelper;
+    
+    @Value("${robot.tuling.apikey}")
+    private String tulingApikey;
 
     public static List<MDTemple> mdts;
     
@@ -183,11 +187,11 @@ public class ContentHandler {
     }
     
     public String tuling(String context) throws Exception {
-        String APIKEY = "402536689fcf4282ae1f213e70c6a819";
-        String url = "http://www.tuling123.com/openapi/api?key=" + APIKEY + "&info="
+        if (tulingApikey == null)
+            return "不知道你在说啥";
+        String url = "http://www.tuling123.com/openapi/api?key=" + tulingApikey + "&info="
                 + URLEncoder.encode(context.trim(), "utf-8");
         StringBuffer sb = null;
-        // 取得输入流，并使用Reader读取
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), "utf-8"))) {
             sb = new StringBuffer();
             String line = "";
