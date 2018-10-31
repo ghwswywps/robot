@@ -23,7 +23,6 @@ import com.robot.entity.User;
 import com.robot.helper.PowerHelper;
 import com.robot.util.ColorUtil;
 import com.robot.util.DingUtil;
-import com.robot.util.PostManGenUtil;
 import com.robot.util.SqlFormatUtil;
 
 @Component
@@ -282,31 +281,6 @@ public class OrderHandler implements ApplicationContextAware {
                 })
                 .power(Power.MASTER)
                 .build());
-        orderMap.put("PostManGen", Order
-                .builder()
-                .args(Arrays.asList("*mavenXml","port","relayOn"))
-                .name("PostManGen")
-                .action(p -> {
-                    String mavenXml = p.get("mavenXml");
-                    String port = p.get("port");
-                    if (port == null)
-                        port = "80";
-                    String relayOn = p.get("relayOn");
-                    String postManConfigByMavenXml = null;
-                    try {
-                        postManConfigByMavenXml = new PostManGenUtil().getPostManConfigByMavenXml(mavenXml, Integer.parseInt(port), relayOn);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        postManConfigByMavenXml = e.getMessage();
-                    }
-                    Body body = new Body();
-                    body.setMsgtype("text");
-                    body.setText(Text.builder().content(postManConfigByMavenXml).build());
-                    return body;
-                })
-                .power(Power.USER)
-                .build());
-        
         
     }
 
