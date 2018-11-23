@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.robot.bean.Subscriber;
+import com.robot.bean.repository.SubscriberRepository;
 import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.Body;
 import com.robot.entity.Order.Power;
@@ -19,6 +21,7 @@ import com.robot.entity.Request;
 import com.robot.entity.Text;
 import com.robot.entity.User;
 import com.robot.handler.ContentHandler;
+import com.robot.helper.ChatbotSender;
 import com.robot.helper.PowerHelper;
 
 @Controller
@@ -29,6 +32,10 @@ public class MainController {
     private ContentHandler contentHandler;
     @Autowired
     private PowerHelper powerHelper;
+    @Autowired
+    private SubscriberRepository subscriberRepository;
+    @Autowired
+    private ChatbotSender chatbotSender;
     
     private Logger logger = Logger.getLogger(MainController.class);
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -67,10 +74,29 @@ public class MainController {
         templeRepository.delete(id);
         return "ok";
     }
+    
     @RequestMapping(value = "/master_set/{userId}", produces = "application/json; charset=utf-8")
     @ResponseBody
     String setMaster(String userId) {
         powerHelper.save(Power.MASTER, Arrays.asList(new User(userId)));
+        return "ok";
+    }
+    
+    @RequestMapping(value = "/meal_set/{userId}", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    String setMealMember(String userId) {
+        subscriberRepository.save(new Subscriber(0, userId));
+        return "ok";
+    }
+    
+    @RequestMapping(value = "/meal_test", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    String mealTest() {
+        try {
+            chatbotSender.sendMealMessageMO();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "ok";
     }
 

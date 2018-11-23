@@ -34,12 +34,15 @@ import com.robot.entity.Text;
 import com.robot.entity.TuLingBody;
 import com.robot.entity.User;
 import com.robot.helper.PowerHelper;
+import com.robot.helper.SubscriberHelper;
 import com.robot.util.ELUtil;
 
 @Component
 public class ContentHandler {
     @Autowired
     private TempleRepository templeRepository;
+    @Autowired
+    private SubscriberHelper subscriberHelper;
     @Autowired
     private PowerHelper powerHelper;
     
@@ -77,7 +80,15 @@ public class ContentHandler {
         String chatbotUserId = request.getChatbotUserId();
         atUsers.removeIf(user -> user.getDingtalkId().equals(chatbotUserId));
         
-        
+        // 优先级0：加班餐 ===================================
+        switch (content.trim()) {
+        case "订阅加班餐":
+            return subscriberHelper.subscribe(request);
+        case "取消订阅加班餐":
+            return subscriberHelper.unSubscribe(request);
+        default:
+            break;
+        }
         
         // 优先级1：order ===================================
         Map<String, Order> orderMap = OrderHandler.orderMap;
