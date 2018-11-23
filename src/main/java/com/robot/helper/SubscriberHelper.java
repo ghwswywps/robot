@@ -19,10 +19,10 @@ public class SubscriberHelper {
     public Body subscribe(Request request) {
         Body body = new Body();
         body.setMsgtype("text");
-        String text = null;
+        String text = "";
         String senderId = request.getSenderId();
         List<Subscriber> userIds = subscriberRepository.findByUserId(senderId);
-        if (CollectionUtils.isEmpty(userIds)) {
+        if (!CollectionUtils.isEmpty(userIds)) {
             text += "已订阅加班餐提醒，请勿重复订阅！";
         } else {
             subscriberRepository.save(new Subscriber(0, senderId));
@@ -35,10 +35,10 @@ public class SubscriberHelper {
     public Body unSubscribe(Request request) {
         Body body = new Body();
         body.setMsgtype("text");
-        String text = null;
+        String text = "";
         String senderId = request.getSenderId();
         List<Subscriber> userIds = subscriberRepository.findByUserId(senderId);
-        if (!CollectionUtils.isEmpty(userIds)) {
+        if (CollectionUtils.isEmpty(userIds)) {
             text += "还未订阅加班餐提醒，无法取消！";
         } else {
             subscriberRepository.delete(userIds);
