@@ -55,7 +55,7 @@ public class ChatbotSender {
         }
     }
     
-    public static void main(String[] args) throws Exception {
+    public static void main1(String[] args) throws Exception {
         String littleTeamToken = "13106d51c8a7cda15da07d402cd1db1103895e6a77f94c49ffca25fb87c0485c";
         String text = "## 加班餐提醒\n" + 
                 "-----\n" + 
