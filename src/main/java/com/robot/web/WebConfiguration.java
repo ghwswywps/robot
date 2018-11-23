@@ -13,14 +13,15 @@ import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class WebConfiguration {
+public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private static final String mapping = "/h2/*";
 
     @Bean
-    public ServletRegistrationBean h2servletRegistration(){
+    public ServletRegistrationBean h2servletRegistration() {
         ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
         registrationBean.addUrlMappings(mapping);
         registrationBean.addInitParameter("-webAllowOthers", "");

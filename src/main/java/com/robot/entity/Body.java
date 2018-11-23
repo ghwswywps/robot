@@ -15,6 +15,7 @@ public class Body {
     private MarkDown markdown;
     private At at;
     private Link link;
+    private ActionCard actionCard;
     
 
 }
