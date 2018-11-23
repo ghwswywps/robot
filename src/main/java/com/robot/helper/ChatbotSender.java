@@ -75,7 +75,7 @@ public class ChatbotSender {
         new ChatbotSender().send(Body.builder()
                 .actionCard(ActionCard.builder()
                         .btns(Arrays.asList(new Btn("直达加班餐", "https://entu.rajax.me"),
-                                new Btn("♈♈♈♈♈♈♈", " "),
+                                new Btn("♈♈♈♈♈♈♈", "https://entu.rajax.me"),
                                 new Btn("订阅", "dtmd://dingtalkclient/sendMessage?content=订阅加班餐"),
                                 new Btn("取消订阅", "dtmd://dingtalkclient/sendMessage?content=取消订阅加班餐")))
                         .title("加班餐提醒")
@@ -100,7 +100,7 @@ public class ChatbotSender {
         new ChatbotSender().send(Body.builder()
                 .actionCard(ActionCard.builder()
                         .btns(Arrays.asList(new Btn("直达加班餐", "https://entu.rajax.me"),
-                                new Btn("♈♈♈♈♈♈♈", " "),
+                                new Btn("♈♈♈♈♈♈♈", "https://entu.rajax.me"),
                                 new Btn("订阅", "dtmd://dingtalkclient/sendMessage?content=订阅加班餐"),
                                 new Btn("取消订阅", "dtmd://dingtalkclient/sendMessage?content=取消订阅加班餐")))
                         .title("加班餐提醒")
