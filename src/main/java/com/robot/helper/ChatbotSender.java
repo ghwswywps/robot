@@ -42,6 +42,7 @@ public class ChatbotSender {
         HttpPost httppost = new HttpPost(token);
         httppost.addHeader("Content-Type", "application/json; charset=utf-8");
         StringEntity se = new StringEntity(JSON.toJSONString(body), "utf-8");
+        log.info("SenderBody:" + JSON.toJSONString(body));
         httppost.setEntity(se);
         httpclient.execute(httppost);
     }
