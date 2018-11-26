@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.robot.bean.repository.SubscriberRepository;
 import com.robot.entity.ActionCard;
 import com.robot.entity.At;
@@ -67,53 +68,65 @@ public class ChatbotSender {
     }
     
     public void sendMealMessageMO() throws Exception {
-        String text = "## 加班餐提醒\n" + 
-                "-----\n" + 
-                "现在的时间是<font color=#CC3300 >9:29</font>，距离今天可以点加班餐的开始时间还剩<font color=#CC3300 >1</font>分钟。  \n" + 
-                "&nbsp;  " + 
-                "\n" + 
-                "<font color=#3333ff >@" + StringUtils.join(getUsers(), " @") + "</font>";
-        new ChatbotSender().send(Body.builder()
-                .actionCard(ActionCard.builder()
-                        .btns(Arrays.asList(new Btn("直达加班餐", "https://entu.rajax.me"),
-                                new Btn("♈♈♈♈♈♈♈", "https://entu.rajax.me"),
-                                new Btn("订阅", "dtmd://dingtalkclient/sendMessage?content=订阅加班餐"),
-                                new Btn("取消订阅", "dtmd://dingtalkclient/sendMessage?content=取消订阅加班餐")))
-                        .title("加班餐提醒")
-                        .text(text)
-                        .build())
-                .at(At
-                        .builder()
-                        .atDingtalkIds(getUsers())
-                        .build())
-                .msgtype("actionCard")
-                .build(), ChatbotSender.WEBHOOK_TOKEN_PRE + mealTeamToken);
-        
+        List<String> users = getUsers();
+        Lists.partition(users, 5).forEach(userList -> {
+            String text = "## 加班餐提醒\n" + 
+                    "-----\n" + 
+                    "现在的时间是<font color=#CC3300 >9:29</font>，距离今天可以点加班餐的开始时间还剩<font color=#CC3300 >1</font>分钟。  \n" + 
+                    "&nbsp;  " + 
+                    "\n" + 
+                    "<font color=#3333ff >@" + StringUtils.join(userList, " @") + "</font>";
+            try {
+                new ChatbotSender().send(Body.builder()
+                        .actionCard(ActionCard.builder()
+                                .btns(Arrays.asList(new Btn("直达加班餐", "https://entu.rajax.me"),
+                                        new Btn("♈♈♈♈♈♈♈", "https://entu.rajax.me"),
+                                        new Btn("订阅", "dtmd://dingtalkclient/sendMessage?content=订阅加班餐"),
+                                        new Btn("取消订阅", "dtmd://dingtalkclient/sendMessage?content=取消订阅加班餐")))
+                                .title("加班餐提醒")
+                                .text(text)
+                                .build())
+                        .at(At
+                                .builder()
+                                .atDingtalkIds(userList)
+                                .build())
+                        .msgtype("actionCard")
+                        .build(), ChatbotSender.WEBHOOK_TOKEN_PRE + mealTeamToken);
+            } catch (Exception e) {
+                log.info(e.getMessage(), e);
+            }
+        });
     }
     
     public void sendMealMessageAF() throws Exception {
-        String text = "## 加班餐提醒\n" + 
-                "-----\n" + 
-                "现在的时间是<font color=#CC3300 >14:55</font>，距离今天可以点加班餐的截止时间还剩<font color=#CC3300 >5</font>分钟。  \n" + 
-                "&nbsp;  " + 
-                "\n" + 
-                "<font color=#3333ff >@" + StringUtils.join(getUsers(), " @") + "</font>";
-        new ChatbotSender().send(Body.builder()
-                .actionCard(ActionCard.builder()
-                        .btns(Arrays.asList(new Btn("直达加班餐", "https://entu.rajax.me"),
-                                new Btn("♈♈♈♈♈♈♈", "https://entu.rajax.me"),
-                                new Btn("订阅", "dtmd://dingtalkclient/sendMessage?content=订阅加班餐"),
-                                new Btn("取消订阅", "dtmd://dingtalkclient/sendMessage?content=取消订阅加班餐")))
-                        .title("加班餐提醒")
-                        .text(text)
-                        .build())
-                .at(At
-                        .builder()
-                        .atDingtalkIds(getUsers())
-                        .build())
-                .msgtype("actionCard")
-                .build(), ChatbotSender.WEBHOOK_TOKEN_PRE + mealTeamToken);
-        
+        List<String> users = getUsers();
+        Lists.partition(users, 5).forEach(userList -> {
+            String text = "## 加班餐提醒\n" + 
+                    "-----\n" + 
+                    "现在的时间是<font color=#CC3300 >14:55</font>，距离今天可以点加班餐的截止时间还剩<font color=#CC3300 >5</font>分钟。  \n" + 
+                    "&nbsp;  " + 
+                    "\n" + 
+                    "<font color=#3333ff >@" + StringUtils.join(userList, " @") + "</font>";
+            try {
+                new ChatbotSender().send(Body.builder()
+                        .actionCard(ActionCard.builder()
+                                .btns(Arrays.asList(new Btn("直达加班餐", "https://entu.rajax.me"),
+                                        new Btn("♈♈♈♈♈♈♈", "https://entu.rajax.me"),
+                                        new Btn("订阅", "dtmd://dingtalkclient/sendMessage?content=订阅加班餐"),
+                                        new Btn("取消订阅", "dtmd://dingtalkclient/sendMessage?content=取消订阅加班餐")))
+                                .title("加班餐提醒")
+                                .text(text)
+                                .build())
+                        .at(At
+                                .builder()
+                                .atDingtalkIds(userList)
+                                .build())
+                        .msgtype("actionCard")
+                        .build(), ChatbotSender.WEBHOOK_TOKEN_PRE + mealTeamToken);
+            } catch (Exception e) {
+                log.info(e.getMessage(), e);
+            }
+        });
     }
     
     private List<String> getUsers() {
