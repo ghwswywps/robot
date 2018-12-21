@@ -18,7 +18,7 @@ public class ScheduledService {
     @Autowired
     private ChatbotSender chatbotSender;
     
-    @Scheduled(cron = "0 29 9 ? * MON-FRI")
+//    @Scheduled(cron = "0 29 9 ? * MON-FRI")
     public void mo(){
         try {
             chatbotSender.sendMealMessageMO();
@@ -28,7 +28,7 @@ public class ScheduledService {
     }
     
 
-    @Scheduled(cron = "0 55 14 ? * MON-FRI")
+//    @Scheduled(cron = "0 55 14 ? * MON-FRI")
     public void af(){
         try {
             chatbotSender.sendMealMessageAF();
