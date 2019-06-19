@@ -21,6 +21,7 @@ import com.robot.entity.Order.Power;
 import com.robot.entity.Text;
 import com.robot.entity.User;
 import com.robot.helper.PowerHelper;
+import com.robot.stream.impl.TempleChatStream;
 import com.robot.util.ColorUtil;
 import com.robot.util.DingUtil;
 import com.robot.util.SqlFormatUtil;
@@ -43,7 +44,7 @@ public class OrderHandler implements ApplicationContextAware {
                             .msgtype("text")
                             .temple(p.get("temple"))
                             .build());
-                    getContentHandler().init();
+                    getTempleChatStream().init();
                     body.setMsgtype("text");
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
@@ -63,7 +64,7 @@ public class OrderHandler implements ApplicationContextAware {
                             .temple(p.get("temple"))
                             .title(p.get("title"))
                             .build());
-                    getContentHandler().init();
+                    getTempleChatStream().init();
                     body.setMsgtype("text");
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
@@ -85,7 +86,7 @@ public class OrderHandler implements ApplicationContextAware {
                             .messageUrl(p.get("messageUrl"))
                             .picUrl(p.get("picUrl"))
                             .build());
-                    getContentHandler().init();
+                    getTempleChatStream().init();
                     body.setMsgtype("text");
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
@@ -106,7 +107,7 @@ public class OrderHandler implements ApplicationContextAware {
                                     SqlFormatUtil.format(p.get("sql")))
                             .title(p.get("title"))
                             .build());
-                    getContentHandler().init();
+                    getTempleChatStream().init();
                     body.setMsgtype("text");
                     body.setText(Text.builder().content("添加成功").build());
                     return body;
@@ -121,10 +122,10 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     StringBuilder res = new StringBuilder();
                     res.append("## 常用SQL列表\n\n-----\n");
-                    if (ContentHandler.sqls == null)
-                        getContentHandler().init();
+                    if (TempleChatStream.sqls == null)
+                        getTempleChatStream().init();
                     
-                    ContentHandler.sqls.forEach(t -> {
+                    TempleChatStream.sqls.forEach(t -> {
                         res.append("> - " + DingUtil.getSendingLinkInMD(t.getTitle()) + "  \n");
                     });
                     body.setMsgtype("markdown");
@@ -177,7 +178,7 @@ public class OrderHandler implements ApplicationContextAware {
                 .action(p -> {
                     Body body = new Body();
                     getTempleRepository().delete(Long.parseLong(p.get("id")));
-                    getContentHandler().init();
+                    getTempleChatStream().init();
                     body.setMsgtype("text");
                     body.setText(Text.builder().content("操作成功").build());
                     return body;
@@ -308,8 +309,8 @@ public class OrderHandler implements ApplicationContextAware {
         return applicationContext.getBean(TempleRepository.class);
     }
     
-    public static ContentHandler getContentHandler() {
-        return applicationContext.getBean(ContentHandler.class);
+    public static TempleChatStream getTempleChatStream() {
+        return applicationContext.getBean(TempleChatStream.class);
     }
     
     public static PowerHelper getPowerHelper() {

@@ -18,9 +18,9 @@ public class PowerEntity {
     @Id
     @GeneratedValue
     private long id;
-    
+
     private String userId;
-    
+
     private int powerId;
-    
+
 }
