@@ -86,11 +86,10 @@ public class SystemChatStream implements ChatStream{
     }
     
     private void checkArgs(List<String> args, Map<String, String> property) throws Exception {
-        List<String> needArgs = args.stream().filter(arg -> arg.startsWith("*")).collect(Collectors.toList());
+        List<String> needArgs = args.stream().filter(arg -> arg.startsWith("\\*")).collect(Collectors.toList());
         for (String p : needArgs) {
             if (property.get(p.split("\\*")[1]) == null)
                 throw new Exception("参数非法，请检查必要参数！");
         }
     }
-
 }
