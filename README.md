@@ -69,7 +69,7 @@
 - 调用方法：
 <font color=#3333ff >@机器人</font> <font color=#00CC00 >指令</font> <font color=#FFA500 >arg</font>:::<font color=#3333ff >value</font> ... <font color=#3333ff >@someone</font>
 
-###表达式
+### 表达式
 - 支持|和&两种运算符，分别代表或和与
 - 可用()分组逻辑表示
 - 带*字符串代表全匹配命中，不带则代表包含命中  
