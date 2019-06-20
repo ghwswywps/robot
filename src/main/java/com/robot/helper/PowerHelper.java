@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +18,16 @@ import com.robot.entity.User;
 public class PowerHelper {
     @Autowired
     private PowerEntityRepository powerEntityRepository;
+    private static volatile boolean hadUser = false;
 
     public Power getPowerByUserId(String userId) {
+        if (!hadUser) {
+            synchronized (PowerHelper.class) {
+                if (!hadUser) {
+                    powerEntityRepository.save(new PowerEntity(0L, userId, Power.MASTER.getId()));
+                }
+            }
+        }
         PowerEntity findByUserId = powerEntityRepository.findByUserId(userId);
         if (findByUserId == null)
             return Power.USER;
@@ -39,5 +49,13 @@ public class PowerHelper {
 
         powerEntityRepository.save(atUsers.stream().filter(user -> !masterIds.contains(user.getDingtalkId()))
                 .map(user -> new PowerEntity(0, user.getDingtalkId(), power.getId())).collect(Collectors.toList()));
+    }
+    
+    @PostConstruct
+    public void init() {
+        Iterable<PowerEntity> findAll = powerEntityRepository.findAll();
+        if (findAll.iterator().hasNext()) {
+            hadUser = true;
+        }
     }
 }
