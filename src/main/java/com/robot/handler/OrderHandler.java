@@ -34,7 +34,7 @@ public class OrderHandler implements ApplicationContextAware {
     static {
         orderMap.put("增加TEXT模板", Order
                 .builder()
-                .args(Arrays.asList("\\*temple", "\\*el"))
+                .args(Arrays.asList("*temple", "*el"))
                 .name("增加TEXT模板")
                 .action(p -> {
                     Body body = new Body();
@@ -53,7 +53,7 @@ public class OrderHandler implements ApplicationContextAware {
                 .build());
         orderMap.put("增加MARKDOWN模板", Order
                 .builder()
-                .args(Arrays.asList("\\*temple", "\\*el", "\\*title"))
+                .args(Arrays.asList("*temple", "*el", "*title"))
                 .name("增加MARKDOWN模板")
                 .action(p -> {
                     Body body = new Body();
@@ -73,7 +73,7 @@ public class OrderHandler implements ApplicationContextAware {
                 .build());
         orderMap.put("增加LINK模板", Order
                 .builder()
-                .args(Arrays.asList("\\*temple", "\\*el", "\\*title", "\\*messageUrl", "picUrl"))
+                .args(Arrays.asList("*temple", "*el", "*title", "*messageUrl", "picUrl"))
                 .name("增加LINK模板")
                 .action(p -> {
                     Body body = new Body();
@@ -95,7 +95,7 @@ public class OrderHandler implements ApplicationContextAware {
                 .build());
         orderMap.put("增加SQL", Order
                 .builder()
-                .args(Arrays.asList("\\*sql","\\*title"))
+                .args(Arrays.asList("*sql","*title"))
                 .name("增加SQL")
                 .action(p -> {
                     Body body = new Body();
@@ -160,6 +160,7 @@ public class OrderHandler implements ApplicationContextAware {
                             res.append("> " + ColorUtil.getOrange("id") + ":" + ColorUtil.getBlue(t.getId() + "") + "  \n");
                             res.append("> " + ColorUtil.getOrange("el") + ":"
                                     + DingUtil.getSendingLinkInMD(t.getEl(), "模板列表￥id:::" + t.getId()) + "  \n");
+                            res.append("> " + DingUtil.getSendingLinkInMD("删除", "删除￥id:::" + t.getId()) + "  \n");
                             res.append("> \n"
                                     +  "> -----  "
                                     +  "\n");
@@ -173,7 +174,7 @@ public class OrderHandler implements ApplicationContextAware {
                 .build());
         orderMap.put("删除模板", Order
                 .builder()
-                .args(Arrays.asList("\\*id"))
+                .args(Arrays.asList("*id"))
                 .name("删除模板")
                 .action(p -> {
                     Body body = new Body();
