@@ -1,5 +1,6 @@
 package com.robot.stream.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -40,12 +41,14 @@ public class TulingStream implements ChatStream{
     }
     
     public String tuling(String context, String userId) throws Exception {
+        if (StringUtils.isEmpty(tulingApikey)) {
+            return "听不懂哦😌";
+        }
         TLBody body = new TLBody();
         Perception perception = new Perception();
         body.setPerception(perception);
         UserInfo userInfo = new UserInfo();
-        int length = userId.length();
-        userInfo.setUserId("123");
+        userInfo.setUserId("default");
         userInfo.setApiKey(tulingApikey);
         perception.setInputText(new InputText(context));
         body.setUserInfo(userInfo);

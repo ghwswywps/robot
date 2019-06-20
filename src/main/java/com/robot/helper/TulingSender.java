@@ -7,7 +7,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -19,10 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class TulingSender {
-    
-    @Value("${robot.tuling.apikey}")
-    private String tulingApikey;
-    
     
     public static String WEBHOOK_TOKEN_PRE = "http://openapi.tuling123.com/openapi/api/v2";
 
