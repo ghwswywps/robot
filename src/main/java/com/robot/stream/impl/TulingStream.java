@@ -44,7 +44,8 @@ public class TulingStream implements ChatStream{
         Perception perception = new Perception();
         body.setPerception(perception);
         UserInfo userInfo = new UserInfo();
-        userInfo.setUserId(userId);
+        int length = userId.length();
+        userInfo.setUserId(userId.substring(length - 6, length - 2));
         userInfo.setApiKey(tulingApikey);
         perception.setInputText(new InputText(context));
         body.setUserInfo(userInfo);
