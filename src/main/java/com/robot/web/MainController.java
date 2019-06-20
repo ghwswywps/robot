@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.robot.bean.repository.TempleRepository;
 import com.robot.entity.Body;
 import com.robot.entity.Request;
 import com.robot.entity.Text;
@@ -22,8 +21,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Controller
 public class MainController {
-    @Autowired
-    private TempleRepository templeRepository;
     @Autowired
     private ContentHandler contentHandler;
     
@@ -48,21 +45,5 @@ public class MainController {
         r.setSenderId("1");
         Body body = contentHandler.getBodyByRequest(r);
         return JSON.toJSONString(body);
-    }
-    
-    
-
-    @RequestMapping(value = "/deleteAll", produces = "application/json; charset=utf-8")
-    @ResponseBody
-    String h2DeletAll() {
-        templeRepository.deleteAll();
-        return "ok";
-    }
-    
-    @RequestMapping(value = "/delete/{id}", produces = "application/json; charset=utf-8")
-    @ResponseBody
-    String h2Delet(@PathVariable("id") Long id) {
-        templeRepository.delete(id);
-        return "ok";
     }
 }
