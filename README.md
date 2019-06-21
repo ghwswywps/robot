@@ -25,6 +25,13 @@
       - [增加SQL (内置的建议sql备忘录)](#%E5%A2%9E%E5%8A%A0sql-%E5%86%85%E7%BD%AE%E7%9A%84%E5%BB%BA%E8%AE%AEsql%E5%A4%87%E5%BF%98%E5%BD%95)
       - [模板列表](#%E6%A8%A1%E6%9D%BF%E5%88%97%E8%A1%A8)
       - [删除模板](#%E5%88%A0%E9%99%A4%E6%A8%A1%E6%9D%BF)
+  - [编写一个目录式文档](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95%E5%BC%8F%E6%96%87%E6%A1%A3)
+    - [钉钉自定义协议](#%E9%92%89%E9%92%89%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%8F%E8%AE%AE)
+    - [目录式推荐模板](#%E7%9B%AE%E5%BD%95%E5%BC%8F%E6%8E%A8%E8%8D%90%E6%A8%A1%E6%9D%BF)
+  - [编写一个投票机器人](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%8A%95%E7%A5%A8%E6%9C%BA%E5%99%A8%E4%BA%BA)
+  - [编写一个分页查询器](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E5%99%A8)
+  - [编写一个加班餐机器人](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E5%8A%A0%E7%8F%AD%E9%A4%90%E6%9C%BA%E5%99%A8%E4%BA%BA)
+  - [编写一个成语接龙游戏机器人](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%88%90%E8%AF%AD%E6%8E%A5%E9%BE%99%E6%B8%B8%E6%88%8F%E6%9C%BA%E5%99%A8%E4%BA%BA)
   - [更新](#%E6%9B%B4%E6%96%B0)
     - [0.0.1-SNAPSHOT (alpha base)](#001-snapshot-alpha-base)
     - [0.0.2-SNAPSHOT](#002-snapshot)
@@ -69,7 +76,7 @@
 - 调用方法：
 <font color=#3333ff >@机器人</font> <font color=#00CC00 >指令</font> <font color=#FFA500 >arg</font>:::<font color=#3333ff >value</font> ... <font color=#3333ff >@someone</font>
 
-### 表达式
+###表达式
 - 支持|和&两种运算符，分别代表或和与
 - 可用()分组逻辑表示
 - 带*字符串代表全匹配命中，不带则代表包含命中  
@@ -147,11 +154,19 @@ public static enum Power {
 #### 删除模板
 - 指令：<font color=#3333ff >@机器人</font> <font color=#00CC00 >删除模板</font> <font color=#FFA500 >[\*id]</font>
 
-## 如何编写目录式文档  
-### 钉钉自定义协议 
-
+## 编写一个目录式文档
+### 钉钉自定义协议
+editing
 ### 目录式推荐模板
-
+editing
+## 编写一个投票机器人
+editing
+## 编写一个分页查询器
+editing
+## 编写一个加班餐机器人
+editing
+## 编写一个成语接龙游戏机器人
+editing
 
 ## 更新
 ### 0.0.1-SNAPSHOT (alpha base)
