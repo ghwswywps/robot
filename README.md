@@ -167,6 +167,8 @@ editing
 editing
 ## 编写一个成语接龙游戏机器人
 editing
+## 使用sql备忘录
+editing
 
 ## 更新
 ### 0.0.1-SNAPSHOT (alpha base)
