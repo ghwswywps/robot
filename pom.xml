@@ -78,15 +78,50 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.6</version><!--$NO-MVN-MAN-VER$-->
+			<version>4.5.6</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
-
+		<!--markdown to html -->
+		<dependency>
+			<groupId>com.vladsch.flexmark</groupId>
+			<artifactId>flexmark</artifactId>
+			<version>0.26.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vladsch.flexmark</groupId>
+			<artifactId>flexmark-util</artifactId>
+			<version>0.26.4</version>
+		</dependency>
+		<!--表格渲染插件 -->
+		<dependency>
+			<groupId>com.vladsch.flexmark</groupId>
+			<artifactId>flexmark-ext-tables</artifactId>
+			<version>0.26.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.14.3</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.kotcrab.remark/remark -->
+		<dependency>
+			<groupId>com.kotcrab.remark</groupId>
+			<artifactId>remark</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 
 	<!--maven的插件 -->
 	<build>
-	    <finalName>dingcb</finalName>
+		<finalName>dingcb</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
