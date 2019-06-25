@@ -16,7 +16,7 @@ public class ConfluenceHelper {
 
     @Value("${robot.confluence.url}")
     private String url;
-
+    
     public static final String CONTENT = "content/";
 
     public void updateContent(String contectId, String title, String text) {
@@ -35,5 +35,12 @@ public class ConfluenceHelper {
         confluenceRequest.setBody(body);
         ConfluenceUtil.put(url + CONTENT + contectId, authorization,
                 confluenceRequest);
+    }
+    
+    public void getContentById(String contectId) {
+    }
+    
+    public int findNextVersion(String contectId) {
+        return 1;
     }
 }

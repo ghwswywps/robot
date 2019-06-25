@@ -11,4 +11,9 @@ public class ConfluenceUtil {
         String result = NetUtil.doPut(url, authorization, JSON.toJSONString(confluenceRequest));
         log.info(result);
     }
+    
+    public static void get(String url, String authorization, ConfluenceRequest confluenceRequest) {
+        String result = NetUtil.doPut(url, authorization, JSON.toJSONString(confluenceRequest));
+        log.info(result);
+    }
 }
