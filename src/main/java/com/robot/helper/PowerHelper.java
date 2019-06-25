@@ -25,6 +25,7 @@ public class PowerHelper {
             synchronized (PowerHelper.class) {
                 if (!hadUser) {
                     powerEntityRepository.save(new PowerEntity(0L, userId, Power.MASTER.getId()));
+                    hadUser = true;
                 }
             }
         }
