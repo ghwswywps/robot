@@ -12,6 +12,7 @@
     - [4.勾选outgoing，写入post地址（如http://xxx.com:10900）](#4%E5%8B%BE%E9%80%89outgoing%E5%86%99%E5%85%A5post%E5%9C%B0%E5%9D%80%E5%A6%82httpxxxcom10900)
   - [基本指令](#%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4)
     - [定义](#%E5%AE%9A%E4%B9%89)
+    - [表达式](#%E8%A1%A8%E8%BE%BE%E5%BC%8F)
       - [示例](#%E7%A4%BA%E4%BE%8B)
     - [权限指令](#%E6%9D%83%E9%99%90%E6%8C%87%E4%BB%A4)
       - [第一次配置master权限](#%E7%AC%AC%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AEmaster%E6%9D%83%E9%99%90)
@@ -19,10 +20,10 @@
       - [模板帮助指令](#%E6%A8%A1%E6%9D%BF%E5%B8%AE%E5%8A%A9%E6%8C%87%E4%BB%A4)
       - [指令帮助指令](#%E6%8C%87%E4%BB%A4%E5%B8%AE%E5%8A%A9%E6%8C%87%E4%BB%A4)
       - [机器人指令](#%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8C%87%E4%BB%A4)
-      - [增加TEXT模板 （简单模板）](#%E5%A2%9E%E5%8A%A0text%E6%A8%A1%E6%9D%BF-%E7%AE%80%E5%8D%95%E6%A8%A1%E6%9D%BF)
-      - [增加MARKDOWN模板 （高级模板）](#%E5%A2%9E%E5%8A%A0markdown%E6%A8%A1%E6%9D%BF-%E9%AB%98%E7%BA%A7%E6%A8%A1%E6%9D%BF)
-      - [增加LINK模板 （高级模板）](#%E5%A2%9E%E5%8A%A0link%E6%A8%A1%E6%9D%BF-%E9%AB%98%E7%BA%A7%E6%A8%A1%E6%9D%BF)
-      - [增加SQL (内置的建议sql备忘录)](#%E5%A2%9E%E5%8A%A0sql-%E5%86%85%E7%BD%AE%E7%9A%84%E5%BB%BA%E8%AE%AEsql%E5%A4%87%E5%BF%98%E5%BD%95)
+      - [增加TEXT模板 （简单模板）](#%E5%A2%9E%E5%8A%A0TEXT%E6%A8%A1%E6%9D%BF-%E7%AE%80%E5%8D%95%E6%A8%A1%E6%9D%BF)
+      - [增加MARKDOWN模板 （高级模板）](#%E5%A2%9E%E5%8A%A0MARKDOWN%E6%A8%A1%E6%9D%BF-%E9%AB%98%E7%BA%A7%E6%A8%A1%E6%9D%BF)
+      - [增加LINK模板 （高级模板）](#%E5%A2%9E%E5%8A%A0LINK%E6%A8%A1%E6%9D%BF-%E9%AB%98%E7%BA%A7%E6%A8%A1%E6%9D%BF)
+      - [增加SQL (内置的建议sql备忘录)](#%E5%A2%9E%E5%8A%A0SQL-%E5%86%85%E7%BD%AE%E7%9A%84%E5%BB%BA%E8%AE%AEsql%E5%A4%87%E5%BF%98%E5%BD%95)
       - [模板列表](#%E6%A8%A1%E6%9D%BF%E5%88%97%E8%A1%A8)
       - [删除模板](#%E5%88%A0%E9%99%A4%E6%A8%A1%E6%9D%BF)
   - [编写一个目录式文档](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95%E5%BC%8F%E6%96%87%E6%A1%A3)
@@ -32,10 +33,12 @@
   - [编写一个分页查询器](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E5%99%A8)
   - [编写一个加班餐机器人](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E5%8A%A0%E7%8F%AD%E9%A4%90%E6%9C%BA%E5%99%A8%E4%BA%BA)
   - [编写一个成语接龙游戏机器人](#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%88%90%E8%AF%AD%E6%8E%A5%E9%BE%99%E6%B8%B8%E6%88%8F%E6%9C%BA%E5%99%A8%E4%BA%BA)
+  - [使用sql备忘录](#%E4%BD%BF%E7%94%A8sql%E5%A4%87%E5%BF%98%E5%BD%95)
   - [更新](#%E6%9B%B4%E6%96%B0)
-    - [0.0.1-SNAPSHOT (alpha base)](#001-snapshot-alpha-base)
-    - [0.0.2-SNAPSHOT](#002-snapshot)
-    - [0.0.3-SNAPSHOT](#003-snapshot)
+    - [0.0.1-SNAPSHOT (alpha base)](#001-SNAPSHOT-alpha-base)
+    - [0.0.2-SNAPSHOT](#002-SNAPSHOT)
+    - [0.0.3-SNAPSHOT](#003-SNAPSHOT)
+  - [联系我](#%E8%81%94%E7%B3%BB%E6%88%91)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -111,14 +114,14 @@ public static enum Power {
 - 指令：<font color=#3333ff >@机器人</font> <font color=#00CC00 >模板帮助</font> <font color=#FFA500 >[]</font>
 
 示例:  
-![](http://web.abigant.com:81/download/helpo.png)
+![](http://web.abigant.com:81/download/helpt.png)
 
 
 #### 指令帮助指令
 - 指令：<font color=#3333ff >@机器人</font> <font color=#00CC00 >指令帮助</font> <font color=#FFA500 >[]</font>
 
 示例:  
-![](http://web.abigant.com:81/download/helpt.png)
+![](http://web.abigant.com:81/download/helpo.png)
 
 #### 机器人指令
 - 指令：<font color=#3333ff >@机器人</font> <font color=#00CC00 >机器人指令</font> <font color=#FFA500 >[]</font>
@@ -179,3 +182,7 @@ update doc
 
 ### 0.0.3-SNAPSHOT 
 一大波优化
+
+## 联系我
+- 邮箱：[i@abigant.com](mailto://i@abigant.com)  
+- 钉钉：[abigant](dingtalk://dingtalkclient/action/sendmsg?dingtalk_id=abigant)
