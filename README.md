@@ -25,7 +25,7 @@ HTTPS: https://repo1.maven.org/maven2
 6. 已经集成图灵聊天机器人api，如果需要请在application.properties配置robot.tuling.apikey属性，官方链接：[图灵机器人](http://www.turingapi.com/)
 
 ## 使用WIKI
-[click me](https://github.com/ghwswywps/robot/wiki)
+[ChatRobotWiki](https://github.com/ghwswywps/robot/wiki/ChatRobot)
 
 ## 更新
 ### 0.0.1-SNAPSHOT (alpha base)
