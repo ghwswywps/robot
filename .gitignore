@@ -2,3 +2,5 @@
 /.vscode/
 /.settings/
 /bin/
+.factorypath
+.classpath
