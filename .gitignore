@@ -4,3 +4,6 @@
 /test-output/
 /bin/
 .project
+.factorypath
+.vscode/launch.json
+.vscode/settings.json

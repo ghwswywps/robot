@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.Test;
 
-import com.atlassian.confluence.api.model.Expansion;
 import com.atlassian.confluence.api.model.content.Content;
 import com.atlassian.confluence.api.model.content.ContentBody;
 import com.atlassian.confluence.api.model.content.ContentRepresentation;
@@ -20,10 +19,8 @@ import com.atlassian.confluence.api.model.content.ContentType;
 import com.atlassian.confluence.api.model.content.Version;
 import com.atlassian.confluence.api.model.content.id.ContentId;
 import com.atlassian.confluence.rest.client.RemoteContentServiceImpl;
-import com.atlassian.confluence.rest.client.RemoteContentVersionService.RemoteVersionFinder;
 import com.atlassian.confluence.rest.client.RestClientFactory;
 import com.atlassian.confluence.rest.client.authentication.AuthenticatedWebResourceProvider;
-import com.atlassian.confluence.rest.client.impl.RemoteContentVersionServiceImpl;
 import com.atlassian.util.concurrent.Promise;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.robot.helper.ConfluenceHelper;
