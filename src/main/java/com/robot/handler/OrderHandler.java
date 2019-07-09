@@ -31,6 +31,7 @@ public class OrderHandler implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
     public static Map<String, Order> orderMap = new HashMap<>();
+    //静态指令块，需要添加再次编辑即可
     static {
         orderMap.put("增加TEXT模板", Order
                 .builder()

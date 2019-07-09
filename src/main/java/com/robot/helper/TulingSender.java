@@ -15,6 +15,9 @@ import com.robot.entity.tl.TLBody;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 封装了图灵api
+ */
 @Slf4j
 @Component
 public class TulingSender {

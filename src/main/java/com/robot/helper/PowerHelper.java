@@ -14,6 +14,9 @@ import com.robot.bean.repository.PowerEntityRepository;
 import com.robot.entity.Order.Power;
 import com.robot.entity.User;
 
+/**
+ * 权限中间层方法
+ */
 @Component
 public class PowerHelper {
     @Autowired

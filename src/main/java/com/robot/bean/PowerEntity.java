@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 人员权限Entity
+ */
 @Entity
 @Data
 @Builder

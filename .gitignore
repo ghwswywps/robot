@@ -1,7 +1,9 @@
 /target/
-/.vscode/
 /.settings/
 /bin/
+.project
 .factorypath
+.vscode/launch.json
+.vscode/settings.json
 .classpath
 .project

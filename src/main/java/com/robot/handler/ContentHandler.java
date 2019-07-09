@@ -19,6 +19,11 @@ import lombok.extern.log4j.Log4j;
 @Component
 @Log4j
 public class ContentHandler {
+    /**
+     * 处理中枢
+     * @param request
+     * @return
+     */
     public Body getBodyByRequest(Request request) {
         Body body = new Body();
         try {
@@ -32,13 +37,19 @@ public class ContentHandler {
         return body;
     }
     
-
+    /**
+     * 处理request中间层
+     * @param request
+     * @return
+     * @throws Exception
+     */
     private Body handleBody(Request request) throws Exception {
         String content = request.getText().getContent();
         if (StringUtils.isEmpty(content.trim())) {
             request.getText().setContent(StaticText.DEFAULT_ORDER);
             content = request.getText().getContent();
         }
+        //获取所有的ChatbotStearm
         List<ChatStream> streamList = StreamCenter.getStream();
         
         Body result = StaticText.EMPTY_BODY;

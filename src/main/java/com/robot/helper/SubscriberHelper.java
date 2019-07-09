@@ -12,6 +12,9 @@ import com.robot.entity.Body;
 import com.robot.entity.Request;
 import com.robot.entity.Text;
 
+/**
+ * 订阅者中间层
+ */
 @Component
 public class SubscriberHelper {
     @Autowired

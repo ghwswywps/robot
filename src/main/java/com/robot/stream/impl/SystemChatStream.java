@@ -21,6 +21,9 @@ import com.robot.helper.PowerHelper;
 import com.robot.stream.ChatStream;
 import com.robot.stream.StaticText;
 
+/**
+ * 系统指令层的ChatStream实现
+ */
 @Component
 public class SystemChatStream implements ChatStream{
     @Autowired
@@ -57,6 +60,12 @@ public class SystemChatStream implements ChatStream{
 
     }
     
+    /**
+     * 解析属性的方法
+     * @param content
+     * @return
+     * @throws Exception
+     */
     private Map<String, String> getProperty(String content) throws Exception {
         Pattern pattern = Pattern.compile("\"\"\"([\\s\\S]*?)\"\"\"");
         Matcher matcher = pattern.matcher(content);
