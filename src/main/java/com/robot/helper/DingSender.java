@@ -16,6 +16,9 @@ import com.robot.entity.MarkDown;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * incoming交互方式的一些方法
+ */
 @Slf4j
 @Component
 public class DingSender {

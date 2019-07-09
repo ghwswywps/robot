@@ -7,3 +7,5 @@
 .factorypath
 .vscode/launch.json
 .vscode/settings.json
+.classpath
+.project

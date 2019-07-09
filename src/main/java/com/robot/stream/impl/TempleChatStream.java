@@ -19,6 +19,9 @@ import com.robot.stream.ChatStream;
 import com.robot.stream.StaticText;
 import com.robot.util.ELUtil;
 
+/**
+ * 实现模板处理的ChatStream
+ */
 @Component
 public class TempleChatStream implements ChatStream{
     @Autowired
@@ -45,6 +48,9 @@ public class TempleChatStream implements ChatStream{
         return StaticText.EMPTY_BODY;
     }
     
+    /**
+     * 这里的处理方式是全部加载内存，有变更会全局更新
+     */
     public void init() {
         Iterable<Temple> temples = templeRepository.findAll();
         mdts = new ArrayList<>();

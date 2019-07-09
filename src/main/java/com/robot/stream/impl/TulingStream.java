@@ -16,6 +16,9 @@ import com.robot.helper.TulingSender;
 import com.robot.stream.ChatStream;
 import com.robot.stream.StaticText;
 
+/**
+ * 第三方插件（图灵）的处理方法
+ */
 @Component
 public class TulingStream implements ChatStream{
     

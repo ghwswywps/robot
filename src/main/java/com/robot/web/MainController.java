@@ -30,15 +30,24 @@ public class MainController {
     @Value("${robot.self.token}")
     private String selfToken;
     
+    /**
+     * 钉钉回调接口（官网规范）
+     * @param requestStr
+     * @param token
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     String home(@RequestBody String requestStr, @RequestHeader(value="token") String token) throws Exception {
+        //简单鉴权
         if (!StringUtils.isEmpty(selfToken)) {
             if (!selfToken.equals(token)) {
                 log.info("token:" + token);
                 return "通关密码好像不对吧..😀";
             }
         }
+
         log.info(requestStr);
         Request request = JSON.parseObject(requestStr, Request.class);
         Body body = contentHandler.getBodyByRequest(request);
@@ -46,7 +55,11 @@ public class MainController {
         log.info(res);
         return res;
     }
-    
+    /**
+     * 测试接口（postman会有字符问题）
+     * @param content
+     * @return
+     */
     @RequestMapping(value = "/test/{content}", produces = "application/json; charset=utf-8")
     @ResponseBody
     String test(@PathVariable("content") String content) {

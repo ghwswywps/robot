@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 订阅者Entity
+ */
 @Entity
 @Data
 @Builder

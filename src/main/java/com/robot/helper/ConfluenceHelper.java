@@ -9,6 +9,9 @@ import com.robot.entity.confluence.Storage;
 import com.robot.entity.confluence.Version;
 import com.robot.util.ConfluenceUtil;
 
+/**
+ * 封装了一些wiki通用方法
+ */
 @Component
 public class ConfluenceHelper {
     @Value("${robot.confluence.authorization}")

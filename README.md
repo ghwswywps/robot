@@ -3,7 +3,7 @@
 
 ## 必须环境
 - 需要组织架构支持机器人outgoing模式，如果没有此权限，可以联系你公司的管理员与钉钉小二大柚（钉钉号：w47zhfa）联系添加。
-- JDK 8以上版本  （如果是java9及以上请确保中央仓库）  
+- JDK 8以上版本   
   前往官方下载:[jdk8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - 如果是JDK 9或以上版本建议使用中心仓库，否则可能某些jar找不到：  
 ```
