@@ -1,7 +1,5 @@
 /target/
 /.settings/
-/.classpath
-/test-output/
 /bin/
 .project
 .factorypath
