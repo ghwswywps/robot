@@ -40,3 +40,5 @@ for reconstruction
 ## 联系我
 - 邮箱：[i@abigant.com](mailto://i@abigant.com)  
 - 钉钉：[abigant](dingtalk://dingtalkclient/action/sendmsg?dingtalk_id=abigant)
+
+不要在工作时间联系我
