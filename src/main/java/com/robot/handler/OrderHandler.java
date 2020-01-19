@@ -1,5 +1,6 @@
 package com.robot.handler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +14,12 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.robot.bean.Temple;
+import com.robot.bean.repository.FoodEntityRepository;
 import com.robot.bean.repository.TempleRepository;
-import com.robot.entity.Body;
-import com.robot.entity.MarkDown;
-import com.robot.entity.Order;
+import com.robot.entity.*;
 import com.robot.entity.Order.Power;
-import com.robot.entity.Text;
-import com.robot.entity.User;
+import com.robot.entity.order.Food;
+import com.robot.helper.FoodHelper;
 import com.robot.helper.PowerHelper;
 import com.robot.stream.impl.TempleChatStream;
 import com.robot.util.ColorUtil;
@@ -284,6 +284,52 @@ public class OrderHandler implements ApplicationContextAware {
                 })
                 .power(Power.MASTER)
                 .build());
+        orderMap.put("点餐", Order
+                .builder()
+                .args(Arrays.asList("type"))
+                .name("大东北点餐")
+                .action(p -> {
+                    StringBuilder res = new StringBuilder();
+                    String type = p.get("type");
+                    String value = p.get("value");
+                    if ("commit".equals(type)) {
+
+                    } else {
+                        List<Food> foodList = FoodHelper.foodList;
+                        if (foodList.size() == 0) {
+                            getFoodEntityRepository().findAll().forEach(fe -> {
+                                foodList.add(new Food(fe.getName(), fe.getPrice(), fe.getFoodNumber(), false));
+                            });
+                        }
+                        foodList.forEach(food -> {
+                            if (food.getFoodNumber() == Integer.parseInt(value)) {
+                                if (("add").equals(type)) {
+                                    food.setGet(true);
+                                } else if (("del").equals(type)) {
+                                    food.setGet(false);
+                                }
+                            }
+                        });
+                        
+                        res.append("## 当前菜单\n\n-----\n\n");
+                        for (int i = 0; i < foodList.size(); i++) {
+                            Food f = foodList.get(i);
+                            String text = i + ". " + f.getName() + " " + f.getPrice() + "元";
+                            res.append(f.isGet() ? 
+                                ColorUtil.getRed(text) + " " + DingUtil.getSendingLinkInMD("☑", "del￥" + f.getFoodNumber()) : 
+                                text + " " + DingUtil.getSendingLinkInMD("☐", "add￥" + f.getFoodNumber()) + "\n");
+                        }
+                    }
+                    
+                    Body body = new Body();
+                    body.setMsgtype("actionCard");
+                    List<Btn> btns = new ArrayList<>();
+                    btns.add(new Btn("测试", "测试"));
+                    body.setActionCard(ActionCard.builder().title("羞羞点餐").btns(btns).build());
+                    return body;
+                })
+                .power(Power.MASTER)
+                .build());
         
     }
 
@@ -317,5 +363,9 @@ public class OrderHandler implements ApplicationContextAware {
     
     public static PowerHelper getPowerHelper() {
         return applicationContext.getBean(PowerHelper.class);
+    }
+
+    public static FoodEntityRepository getFoodEntityRepository() {
+        return applicationContext.getBean(FoodEntityRepository.class);
     }
 }
