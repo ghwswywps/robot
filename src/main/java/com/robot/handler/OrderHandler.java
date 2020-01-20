@@ -287,7 +287,7 @@ public class OrderHandler implements ApplicationContextAware {
         orderMap.put("点餐", Order
                 .builder()
                 .args(Arrays.asList("type"))
-                .name("大东北点餐")
+                .name("点餐")
                 .action(p -> {
                     StringBuilder res = new StringBuilder();
                     String type = p.get("type");

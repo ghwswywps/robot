@@ -39,34 +39,34 @@ public class WikiTest extends Base {
 
     @Test
     public void testSaveMarkdown() throws InterruptedException, ExecutionException {
-        Client client = RestClientFactory.newClient();
-        String path = "";
-        AuthenticatedWebResourceProvider provider = new AuthenticatedWebResourceProvider(client, url, path);
-        provider.setAuthContext("yang.wu", "!@Ming0924".toCharArray());
-        RemoteContentServiceImpl remoteContentServiceImpl = new RemoteContentServiceImpl(provider,
-                MoreExecutors.listeningDecorator(threadPoolExecutor));
-        Optional<Content> optional = remoteContentServiceImpl.find().withId(ContentId.of(12638872L)).fetch().get();
-        Content x = optional.get();
-        System.err.println(x);
-        Version version = x.getVersion();
-        Version next = version.nextBuilder().build();
-        Map<ContentRepresentation, ContentBody> body = new HashMap<>();
-        body.put(ContentRepresentation.STORAGE,
-                ContentBody.contentBodyBuilder()
-                .value("haha")
-                .representation(ContentRepresentation.STORAGE)
-                .build());
-        Content newContent = Content
-                .builder()
-                .version(next)
-                .type(ContentType.PAGE)
-                .title("hello")
-                .id(ContentId.of(12638872L))
-                .body(body)
-                .build();
-        Version version2 = newContent.getVersion();
-        System.err.println(version2);
-        Promise<Content> update = remoteContentServiceImpl.update(newContent);
-        System.err.println(update.get());
+        // Client client = RestClientFactory.newClient();
+        // String path = "";
+        // AuthenticatedWebResourceProvider provider = new AuthenticatedWebResourceProvider(client, url, path);
+        // provider.setAuthContext("yang.wu", "!@Ming0924".toCharArray());
+        // RemoteContentServiceImpl remoteContentServiceImpl = new RemoteContentServiceImpl(provider,
+        //         MoreExecutors.listeningDecorator(threadPoolExecutor));
+        // Optional<Content> optional = remoteContentServiceImpl.find().withId(ContentId.of(12638872L)).fetch().get();
+        // Content x = optional.get();
+        // System.err.println(x);
+        // Version version = x.getVersion();
+        // Version next = version.nextBuilder().build();
+        // Map<ContentRepresentation, ContentBody> body = new HashMap<>();
+        // body.put(ContentRepresentation.STORAGE,
+        //         ContentBody.contentBodyBuilder()
+        //         .value("haha")
+        //         .representation(ContentRepresentation.STORAGE)
+        //         .build());
+        // Content newContent = Content
+        //         .builder()
+        //         .version(next)
+        //         .type(ContentType.PAGE)
+        //         .title("hello")
+        //         .id(ContentId.of(12638872L))
+        //         .body(body)
+        //         .build();
+        // Version version2 = newContent.getVersion();
+        // System.err.println(version2);
+        // Promise<Content> update = remoteContentServiceImpl.update(newContent);
+        // System.err.println(update.get());
     }
 }
