@@ -302,7 +302,7 @@ public class OrderHandler implements ApplicationContextAware {
                             });
                         }
                         foodList.forEach(food -> {
-                            if (food.getFoodNumber() == Integer.parseInt(value)) {
+                            if (value != null && food.getFoodNumber() == Integer.parseInt(value)) {
                                 if (("add").equals(type)) {
                                     food.setGet(true);
                                 } else if (("del").equals(type)) {
