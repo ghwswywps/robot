@@ -325,7 +325,9 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     body.setMsgtype("actionCard");
                     List<Btn> btns = new ArrayList<>();
-                    btns.add(new Btn("测试", "测试"));
+                    btns.add(new Btn("提交", "测试"));
+                    btns.add(new Btn("清空", "测试"));
+                    btns.add(new Btn("吃屎", "测试"));
                     String text = res.toString();
                     body.setActionCard(ActionCard.builder().title("羞羞点餐").text(text).btns(btns).build());
                     return body;
