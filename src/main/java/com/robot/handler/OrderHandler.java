@@ -314,7 +314,8 @@ public class OrderHandler implements ApplicationContextAware {
                         res.append("## 当前菜单\n\n-----\n\n");
                         for (int i = 0; i < foodList.size(); i++) {
                             Food f = foodList.get(i);
-                            String text = i + ". " + f.getName() + " " + f.getPrice() + "元";
+                            String text = f.getName() + " " + f.getPrice() + "元";
+                            res.append(i + 1 + ". ");
                             res.append(f.isGet() ? 
                                 ColorUtil.getRed(text) + " " + DingUtil.getSendingLinkInMD("☑", "点餐￥type:::del￥value:::" + f.getFoodNumber()) : 
                                 text + " " + DingUtil.getSendingLinkInMD("☐", "点餐￥type:::add￥value:::" + f.getFoodNumber()) + "\n");
