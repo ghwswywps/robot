@@ -341,8 +341,8 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     body.setMsgtype("actionCard");
                     List<Btn> btns = new ArrayList<>();
-                    btns.add(new Btn("提交", "点餐￥type:::commit￥value:::empty"));
-                    btns.add(new Btn("清空", "点餐￥type:::delAll￥value:::empty"));
+                    btns.add(new Btn("提交", DingUtil.getSendingLinkInMD("点餐￥type:::commit￥value:::empty")));
+                    btns.add(new Btn("清空", DingUtil.getSendingLinkInMD("点餐￥type:::delAll￥value:::empty")));
                     String text = res.toString();
                     body.setActionCard(ActionCard.builder().title("羞羞点餐").text(text).btns(btns).build());
                     return body;
