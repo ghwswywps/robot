@@ -314,7 +314,7 @@ public class OrderHandler implements ApplicationContextAware {
                         body.setText(Text.builder().content("清空成功").build());
                         return body;
                     } else if ("book_enter".equals(type)){
-                        String[] v  = value.split("|");
+                        String[] v  = value.split("\\|");
                         getFoodEntityRepository().save(new FoodEntity(0l, v[0], Double.parseDouble(v[1]), Integer.parseInt(v[2])));
                         Body body = new Body();
                         body.setMsgtype("text");
