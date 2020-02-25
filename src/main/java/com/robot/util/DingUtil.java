@@ -8,4 +8,8 @@ public class DingUtil {
     public static String getSendingLinkInMD(String show, String order) {
         return "[" + show + "](dtmd://dingtalkclient/sendMessage?content=" + order + ")";
     }
+
+    public static String getSendingLink(String order) {
+        return "dtmd://dingtalkclient/sendMessage?content=" + order + ")";
+    }
 }

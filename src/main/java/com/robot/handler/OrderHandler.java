@@ -327,7 +327,7 @@ public class OrderHandler implements ApplicationContextAware {
                             }
                         });
                         
-                        res.append("# 当前菜单\n\n-----\n\n");
+                        res.append("&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<font color=#FFA500 >当前菜单</font>\n\n-----\n\n");
                         for (int i = 0; i < foodList.size(); i++) {
                             Food f = foodList.get(i);
                             String text = f.getName() + " " + f.getPrice() + "元";
@@ -341,8 +341,8 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     body.setMsgtype("actionCard");
                     List<Btn> btns = new ArrayList<>();
-                    btns.add(new Btn("提交", DingUtil.getSendingLinkInMD("点餐￥type:::commit￥value:::empty")));
-                    btns.add(new Btn("清空", DingUtil.getSendingLinkInMD("点餐￥type:::delAll￥value:::empty")));
+                    btns.add(new Btn("提交", DingUtil.getSendingLink("点餐￥type:::commit￥value:::empty")));
+                    btns.add(new Btn("清空", DingUtil.getSendingLink("点餐￥type:::delAll￥value:::empty")));
                     String text = res.toString();
                     body.setActionCard(ActionCard.builder().title("羞羞点餐").text(text).btns(btns).build());
                     return body;
