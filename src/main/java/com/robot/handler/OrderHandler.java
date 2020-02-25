@@ -293,7 +293,23 @@ public class OrderHandler implements ApplicationContextAware {
                     String type = p.get("type");
                     String value = p.get("value");
                     if ("commit".equals(type)) {
-
+                        Body body = new Body();
+                        body.setMsgtype("markdown");
+                        res.append("### 菜单如下，复制后提交\n" + 
+                            "------\n" + 
+                            "```example\n");
+                        FoodHelper.foodList.forEach(f -> {
+                            res.append("  " + f.getFoodNumber() + "\n");
+                        });
+                        res.append("```\n");
+                        body.setMarkdown(MarkDown.builder().text(res.toString()).title("点餐结果").build());
+                        FoodHelper.foodList.clear();
+                    } else if ("delAll".equals(type)){
+                        FoodHelper.foodList.clear();
+                        Body body = new Body();
+                        body.setMsgtype("text");
+                        body.setText(Text.builder().content("清空成功").build());
+                        return body;
                     } else {
                         List<Food> foodList = FoodHelper.foodList;
                         if (foodList.size() == 0) {
@@ -311,7 +327,7 @@ public class OrderHandler implements ApplicationContextAware {
                             }
                         });
                         
-                        res.append("## 当前菜单\n\n-----\n\n");
+                        res.append("# 当前菜单\n\n-----\n\n");
                         for (int i = 0; i < foodList.size(); i++) {
                             Food f = foodList.get(i);
                             String text = f.getName() + " " + f.getPrice() + "元";
@@ -325,9 +341,8 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     body.setMsgtype("actionCard");
                     List<Btn> btns = new ArrayList<>();
-                    btns.add(new Btn("提交", "测试"));
-                    btns.add(new Btn("清空", "测试"));
-                    btns.add(new Btn("吃屎", "测试"));
+                    btns.add(new Btn("提交", "点餐￥type:::commit￥value:::empty"));
+                    btns.add(new Btn("清空", "点餐￥type:::delAll￥value:::empty"));
                     String text = res.toString();
                     body.setActionCard(ActionCard.builder().title("羞羞点餐").text(text).btns(btns).build());
                     return body;
