@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.robot.bean.FoodEntity;
 import com.robot.bean.Temple;
 import com.robot.bean.repository.FoodEntityRepository;
 import com.robot.bean.repository.TempleRepository;
@@ -295,11 +296,13 @@ public class OrderHandler implements ApplicationContextAware {
                     if ("commit".equals(type)) {
                         Body body = new Body();
                         body.setMsgtype("markdown");
-                        res.append("### 菜单如下，复制后提交\n" + 
+                        res.append("### 点单结果如下，复制后提交\n" + 
                             "------\n" + 
                             "```example\n");
                         FoodHelper.foodList.forEach(f -> {
-                            res.append("  " + f.getFoodNumber() + "\n");
+                            if (f.isGet()) {
+                                res.append("  " + f.getFoodNumber() + "\n");
+                            }
                         });
                         res.append("```\n");
                         body.setMarkdown(MarkDown.builder().text(res.toString()).title("点餐结果").build());
@@ -309,6 +312,41 @@ public class OrderHandler implements ApplicationContextAware {
                         Body body = new Body();
                         body.setMsgtype("text");
                         body.setText(Text.builder().content("清空成功").build());
+                        return body;
+                    } else if ("book_enter".equals(type)){
+                        String[] v  = value.split("|");
+                        getFoodEntityRepository().save(new FoodEntity(0l, v[0], Double.parseDouble(v[1]), Integer.parseInt(v[2])));
+                        Body body = new Body();
+                        body.setMsgtype("text");
+                        body.setText(Text.builder().content("新增成功").build());
+                        return body;
+                    } else if ("book_delete".equals(type)){
+                        getFoodEntityRepository().delete(Long.valueOf(value));
+                        Body body = new Body();
+                        body.setMsgtype("text");
+                        body.setText(Text.builder().content("删除成功").build());
+                        return body;
+                    } else if ("book_list".equals(type)){
+                        getFoodEntityRepository().findAll().forEach(t -> {
+                            res.append("> " + ColorUtil.getOrange("id") + ":" + ColorUtil.getBlue(t.getId() + "") + "  \n");
+                            res.append("> " + ColorUtil.getOrange("菜名") + ":" + ColorUtil.getBlue(t.getName() + "") + "  \n");
+                            res.append("> " + ColorUtil.getOrange("价格") + ":" + ColorUtil.getBlue(t.getPrice() + "") + "  \n");
+                            res.append("> " + ColorUtil.getOrange("编号") + ":" + ColorUtil.getBlue(t.getFoodNumber() + "") + "  \n");
+                            res.append("> " + "✘" + DingUtil.getSendingLinkInMD("删除", "点餐￥type:::book_delete￥value:::" + t.getId()) + "  \n");
+                            res.append("> \n"
+                                    +  "> -----  "
+                                    +  "\n");
+                        });
+                        Body body = new Body();
+                        body.setMsgtype("markdown");
+                        body.setMarkdown(MarkDown.builder().text(res.toString().replaceAll("\\*", "\\\\\\*")).title("菜单列表").build());
+                        return body;
+                    } else if ("book_enter".equals(type)){
+                        String[] v  = value.split("|");
+                        getFoodEntityRepository().save(new FoodEntity(0l, v[0], Double.parseDouble(v[1]), Integer.parseInt(v[2])));
+                        Body body = new Body();
+                        body.setMsgtype("text");
+                        body.setText(Text.builder().content("新增成功").build());
                         return body;
                     } else {
                         List<Food> foodList = FoodHelper.foodList;
@@ -327,7 +365,7 @@ public class OrderHandler implements ApplicationContextAware {
                             }
                         });
                         
-                        res.append("&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<font color=#FFA500 >当前菜单</font>\n\n-----\n\n");
+                        res.append("&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp<font color=#FFA500 >当前点单</font>\n\n-----\n\n");
                         for (int i = 0; i < foodList.size(); i++) {
                             Food f = foodList.get(i);
                             String text = f.getName() + " " + f.getPrice() + "元";
@@ -343,6 +381,7 @@ public class OrderHandler implements ApplicationContextAware {
                     List<Btn> btns = new ArrayList<>();
                     btns.add(new Btn("提交", DingUtil.getSendingLink("点餐￥type:::commit￥value:::empty")));
                     btns.add(new Btn("清空", DingUtil.getSendingLink("点餐￥type:::delAll￥value:::empty")));
+                    btns.add(new Btn("查看菜单", DingUtil.getSendingLink("点餐￥type:::book_list￥value:::empty")));
                     String text = res.toString();
                     body.setActionCard(ActionCard.builder().title("羞羞点餐").text(text).btns(btns).build());
                     return body;
