@@ -366,13 +366,13 @@ public class OrderHandler implements ApplicationContextAware {
                             }
                         });
                         
-                        res.append("&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<font color=#FFA500 >当前点单</font>\n\n-----\n\n");
+                        res.append("### <font color=#FFA500 >当前点单</font>\n\n-----\n\n");
                         for (int i = 0; i < foodList.size(); i++) {
                             Food f = foodList.get(i);
                             String text = f.getName() + " " + f.getPrice() + "元";
                             res.append(i + 1 + ". ");
                             res.append(f.isGet() ? 
-                                DingUtil.getSendingLinkInMD("☑", "点餐￥type:::del￥value:::" + f.getFoodNumber()) + " " + ColorUtil.getRed(text)  + "  \n" : 
+                                DingUtil.getSendingLinkInMD("▣", "点餐￥type:::del￥value:::" + f.getFoodNumber()) + " " + ColorUtil.getRed(text)  + "  \n" : 
                                 DingUtil.getSendingLinkInMD("☐", "点餐￥type:::add￥value:::" + f.getFoodNumber()) + " " + text + "  \n");
                         }
                         Double totalPrice = 
