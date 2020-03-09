@@ -307,6 +307,7 @@ public class OrderHandler implements ApplicationContextAware {
                         res.append("```\n");
                         body.setMarkdown(MarkDown.builder().text(res.toString()).title("点餐结果").build());
                         FoodHelper.foodList.clear();
+                        return body;
                     } else if ("delAll".equals(type)){
                         FoodHelper.foodList.clear();
                         Body body = new Body();
@@ -365,15 +366,19 @@ public class OrderHandler implements ApplicationContextAware {
                             }
                         });
                         
-                        res.append("&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<font color=#FFA500 >当前点单</font>\n\n-----\n\n");
+                        res.append("&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<font color=#FFA500 >当前点单</font>\n\n-----\n\n");
                         for (int i = 0; i < foodList.size(); i++) {
                             Food f = foodList.get(i);
                             String text = f.getName() + " " + f.getPrice() + "元";
                             res.append(i + 1 + ". ");
                             res.append(f.isGet() ? 
-                                ColorUtil.getRed(text) + " " + DingUtil.getSendingLinkInMD("☑", "点餐￥type:::del￥value:::" + f.getFoodNumber()) + "\n" : 
-                                text + " " + DingUtil.getSendingLinkInMD("☐", "点餐￥type:::add￥value:::" + f.getFoodNumber()) + "\n");
+                                DingUtil.getSendingLinkInMD("☑", "点餐￥type:::del￥value:::" + f.getFoodNumber()) + " " + ColorUtil.getRed(text)  + "  \n" : 
+                                DingUtil.getSendingLinkInMD("☐", "点餐￥type:::add￥value:::" + f.getFoodNumber()) + " " + text + "  \n");
                         }
+                        double totalPrice = 
+                            foodList.stream().filter(Food::isGet).map(Food::getPrice) .reduce(Double::sum).get();
+                        res.append("\n-----\n\n合计：" + totalPrice + "元");
+                        
                     }
                     
                     Body body = new Body();
