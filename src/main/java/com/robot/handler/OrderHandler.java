@@ -376,8 +376,8 @@ public class OrderHandler implements ApplicationContextAware {
                                 DingUtil.getSendingLinkInMD("☐", "点餐￥type:::add￥value:::" + f.getFoodNumber()) + " " + text + "  \n");
                         }
                         Double totalPrice = 
-                            foodList.stream().filter(Food::isGet).map(Food::getPrice).reduce(Double::sum).orElseGet(null);
-                        res.append("\n-----\n\n合计：" + totalPrice == null ? 0 : totalPrice + "元");
+                            foodList.stream().filter(Food::isGet).map(Food::getPrice).reduce(Double::sum).orElse(0.0);
+                        res.append("\n-----\n\n合计：" + totalPrice + "元");
                         
                     }
                     
