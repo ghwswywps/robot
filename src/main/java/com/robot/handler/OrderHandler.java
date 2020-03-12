@@ -103,7 +103,7 @@ public class OrderHandler implements ApplicationContextAware {
                     Body body = new Body();
                     getTempleRepository().save(Temple
                             .builder()
-                            .el("\\*" + p.get("title"))
+                            .el("*" + p.get("title"))
                             .msgtype("sql")
                             .temple("## " + p.get("title") + "\n\n-----\n" + 
                                     SqlFormatUtil.format(p.get("sql")))

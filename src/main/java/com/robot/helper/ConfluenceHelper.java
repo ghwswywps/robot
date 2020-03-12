@@ -22,7 +22,7 @@ public class ConfluenceHelper {
     
     public static final String CONTENT = "content/";
 
-    public void updateContent(String contectId, String title, String text) {
+    public void updateContent(String contectId, String title, String text) {    
         ConfluenceRequest confluenceRequest = new ConfluenceRequest();
         confluenceRequest.setId(contectId);
         confluenceRequest.setTitle(title);

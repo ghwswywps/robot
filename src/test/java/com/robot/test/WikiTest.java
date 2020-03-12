@@ -1,31 +1,16 @@
 package com.robot.test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.robot.helper.ConfluenceHelper;
+import com.robot.test.base.Base;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.Test;
-
-import com.atlassian.confluence.api.model.content.Content;
-import com.atlassian.confluence.api.model.content.ContentBody;
-import com.atlassian.confluence.api.model.content.ContentRepresentation;
-import com.atlassian.confluence.api.model.content.ContentType;
-import com.atlassian.confluence.api.model.content.Version;
-import com.atlassian.confluence.api.model.content.id.ContentId;
-import com.atlassian.confluence.rest.client.RemoteContentServiceImpl;
-import com.atlassian.confluence.rest.client.RestClientFactory;
-import com.atlassian.confluence.rest.client.authentication.AuthenticatedWebResourceProvider;
-import com.atlassian.util.concurrent.Promise;
-import com.google.common.util.concurrent.MoreExecutors;
-import com.robot.helper.ConfluenceHelper;
-import com.robot.test.base.Base;
-import com.sun.jersey.api.client.Client;
 
 public class WikiTest extends Base {
 
