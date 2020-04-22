@@ -1,6 +1,7 @@
 package com.robot.web;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import lombok.extern.log4j.Log4j;
 public class MainController {
     @Autowired
     private ContentHandler contentHandler;
+
+    public static List<Long> teachersMobiles = new ArrayList<>();
     
     @Value("${robot.self.token}")
     private String selfToken;
@@ -70,5 +73,19 @@ public class MainController {
         r.setSenderId("1");
         Body body = contentHandler.getBodyByRequest(r);
         return JSON.toJSONString(body);
+    }
+
+
+    /**
+     * 获取老师数据
+     * @param content
+     * @return
+     */
+    @RequestMapping(value = "/getTeacherMobiles", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    String getTeacherMobiles() {
+        ArrayList<Long> arrayList = new ArrayList<>(teachersMobiles);
+        teachersMobiles = new ArrayList<>();
+        return JSON.toJSONString(arrayList);
     }
 }

@@ -26,6 +26,7 @@ import com.robot.stream.impl.TempleChatStream;
 import com.robot.util.ColorUtil;
 import com.robot.util.DingUtil;
 import com.robot.util.SqlFormatUtil;
+import com.robot.web.MainController;
 
 @Component
 public class OrderHandler implements ApplicationContextAware {
@@ -284,6 +285,20 @@ public class OrderHandler implements ApplicationContextAware {
                     return body;
                 })
                 .power(Power.MASTER)
+                .build());
+        orderMap.put("flush", Order
+                .builder()
+                .args(Arrays.asList("\\*mobile"))
+                .name("flush")
+                .action(p -> {
+                    String mobile = p.get("mobile");
+                    MainController.teachersMobiles.add(Long.parseLong(mobile.trim()));
+                    Body body = new Body();
+                    body.setMsgtype("text");
+                    body.setText(Text.builder().content("已提交刷新申请").build());
+                    return body;
+                })
+                .power(Power.USER)
                 .build());
         orderMap.put("点餐", Order
                 .builder()
