@@ -110,11 +110,13 @@
 			<version>1.0.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.atlassian.confluence/confluence-rest-client -->
-        <dependency>
-            <groupId>com.atlassian.confluence</groupId>
-            <artifactId>confluence-rest-client</artifactId>
-            <version>6.14.2</version> 
-        </dependency> 
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>29.0-jre</version>
+		</dependency>
+
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
